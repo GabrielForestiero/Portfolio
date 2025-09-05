@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Linkedin, Mail, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 interface FooterProps {
   name?: string;
@@ -12,11 +12,11 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({
-  name = "Tu Nombre",
+  name = "Gabriel Forestiero",
   socialLinks = {
-    github: "https://github.com/tuusuario",
-    linkedin: "https://linkedin.com/in/tuusuario",
-    email: "mailto:tu@email.com"
+    github: "https://github.com/GabrielForestiero",
+    linkedin: "https://www.linkedin.com/in/gabriel-forestiero-dev/",
+    email: "mailto:gabyforestiero@gmail.com"
   }
 }) => {
   const currentYear = new Date().getFullYear();
@@ -68,11 +68,7 @@ const Footer: React.FC<FooterProps> = ({
             <p className="text-gray-400 text-sm mb-2">
               © {currentYear} {name}. Todos los derechos reservados.
             </p>
-            <div className="flex items-center justify-center text-gray-500 text-xs">
-              <span>Hecho con</span>
-              <Heart className="w-3 h-3 mx-1 text-red-500 fill-current" />
-              <span>desde Argentina</span>
-            </div>
+           
           </div>
         </div>
       </div>

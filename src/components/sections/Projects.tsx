@@ -5,7 +5,7 @@ const ProjectsSection = () => {
     {
       title: "E-commerce Platform",
       description: "Plataforma completa de comercio electrónico con carrito de compras, pagos integrados y panel administrativo.",
-      image: "https://via.placeholder.com/400x250/3B82F6/ffffff?text=E-commerce",
+      image: "",
       techs: ["React", "Node.js", "MongoDB", "Stripe"],
       demoLink: "#",
       codeLink: "#"
@@ -13,7 +13,7 @@ const ProjectsSection = () => {
     {
       title: "Task Manager App",
       description: "Aplicación de gestión de tareas con funcionalidades avanzadas como colaboración en equipo y notificaciones.",
-      image: "https://via.placeholder.com/400x250/10B981/ffffff?text=Task+Manager",
+      image: "",
       techs: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"],
       demoLink: "#",
       codeLink: "#"
@@ -21,7 +21,7 @@ const ProjectsSection = () => {
     {
       title: "Weather Dashboard",
       description: "Dashboard interactivo del clima con gráficos en tiempo real y pronóstico extendido para múltiples ciudades.",
-      image: "https://via.placeholder.com/400x250/8B5CF6/ffffff?text=Weather+App",
+      image: "",
       techs: ["React", "Chart.js", "Weather API", "Tailwind"],
       demoLink: "#",
       codeLink: "#"
@@ -29,7 +29,7 @@ const ProjectsSection = () => {
     {
       title: "Social Media App",
       description: "Red social minimalista con posts, likes, comentarios y sistema de seguimiento entre usuarios.",
-      image: "https://via.placeholder.com/400x250/EF4444/ffffff?text=Social+App",
+      image: "",
       techs: ["React Native", "Firebase", "Redux", "Expo"],
       demoLink: "#",
       codeLink: "#"

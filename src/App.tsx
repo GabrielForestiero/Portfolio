@@ -4,6 +4,7 @@ import AboutSection from './components/sections/About';
 import ProjectsSection from './components/sections/Projects';
 import ContactSection from './components/sections/Contact';
 import Footer from './components/layout/Footer';
+import Experience from './components/sections/Experience';
 
 
 function App() {
@@ -17,9 +18,9 @@ function App() {
 
   // Configuración para el Footer
   const footerSocialLinks = {
-    github: "https://github.com/tuusuario",
-    linkedin: "https://linkedin.com/in/tuusuario",
-    email: "mailto:tu@email.com"
+    github: "https://github.com/GabrielForestiero",
+    linkedin: "https://linkedin.com/in/gabriel-forestiero-dev/",
+    email: "mailto:gabyforestiero@gmail.com"
   };
 
   return (
@@ -36,14 +37,15 @@ function App() {
       <main>
         <HeroSection />
         <AboutSection />
+        <Experience></Experience>
         <ProjectsSection />
         <ContactSection />
       </main>
       
       {/* Footer */}
       <Footer 
-        name="Tu Nombre"
-        email="tu@email.com"
+        name="Gabriel Forestiero"
+        email="gabyforestiero@gmail.com"
         socialLinks={footerSocialLinks}
       />
     </div>
