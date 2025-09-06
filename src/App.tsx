@@ -27,7 +27,7 @@ function App() {
     <div className="App">
       {/* Header con navegación smooth scroll */}
       <Header 
-        title="GF"
+        title=""
         menuItems={headerMenuItems}
         showNotifications={false}
         showCart={false}

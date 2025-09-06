@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ShoppingCart, Bell, Terminal, Code2, Zap } from 'lucide-react';
+import logoImage from '../../assets/logo_embed.svg';
 
 interface HeaderProps {
   logo?: string;
@@ -17,7 +18,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
-  logo,
+  logo = logoImage,
   title = "Gabriel Forestiero",
   showNotifications = false,
   showCart = false,
@@ -51,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className="bg-slate-900 backdrop-blur-xl fixed top-0 z-50 w-full">
+      <header className="bg-gradient-to-r from-slate-900/95 via-gray-900/95 to-black/95 backdrop-blur-xl fixed top-0 z-50 w-full">
         {/* Línea superior sutil */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"></div>
 
@@ -61,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center space-x-4">
               <div className="flex items-center group cursor-pointer">
                 {logo ? (
-                  <img src={logo} alt={title} className="h-10 w-auto" />
+                  <img src={logo} alt={title} className="h-25 w-auto" />
                 ) : (
                   <div className="relative">
                     <div className="h-10 w-10 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg flex items-center justify-center border border-cyan-400/50 shadow-lg shadow-cyan-400/30">
@@ -74,13 +75,9 @@ const Header: React.FC<HeaderProps> = ({
                   <span className={`text-xl font-mono font-bold text-white hidden sm:block transition-all duration-200 ${
                     glitchActive ? 'animate-pulse text-cyan-400' : ''
                   }`}>
-                    <span className="text-cyan-400 mr-2">&gt;</span>
-                    {title}
-                    <span className="text-cyan-400 ml-2 animate-pulse">_</span>
+                   
                   </span>
-                  <div className="text-xs font-mono text-cyan-400/70 hidden sm:block">
-                    developer.exe
-                  </div>
+                 
                 </div>
               </div>
             </div>
