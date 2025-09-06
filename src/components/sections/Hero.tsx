@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { ExternalLink, Download, ChevronDown, Code, Palette, Zap, Cpu, CircuitBoard } from 'lucide-react';
+import { ExternalLink, Download, ChevronDown, Code, Palette, Zap, Cpu, CircuitBoard, Github, Linkedin, Mail } from 'lucide-react';
 
 const HeroSection = () => {
   const [glitchText, setGlitchText] = useState('Gabriel Forestiero');
@@ -88,6 +88,21 @@ const HeroSection = () => {
     glitch: {
       x: [-2, 2, -1, 1, 0],
       transition: { duration: 0.2 }
+    }
+  };
+
+  const socialVariants: Variants = {
+    hidden: { opacity: 0, y: 20, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" }
+    },
+    hover: {
+      scale: 1.2,
+      y: -8,
+      transition: { duration: 0.3 }
     }
   };
 
@@ -341,7 +356,7 @@ const HeroSection = () => {
         </motion.div>
 
         {/* CV */}
-        <motion.div className="mb-6" variants={itemVariants}>
+        <motion.div className="mb-8" variants={itemVariants}>
           <motion.a
             href="/cv-gabriel-forestiero.pdf"
             target="_blank"
@@ -355,6 +370,62 @@ const HeroSection = () => {
             <span className="text-xl font-semibold">Descargar CV</span>
             <div className="w-4 h-4 bg-cyan-400 rounded-full" />
           </motion.a>
+        </motion.div>
+
+        {/* Social Icons */}
+        <motion.div 
+          className="flex justify-center gap-6 mb-8"
+          variants={itemVariants}
+        >
+          {[
+            { 
+              icon: Github, 
+              href: 'https://github.com/tu-usuario', 
+              label: 'GitHub',
+              color: 'text-gray-300 hover:text-white',
+              bgColor: 'hover:bg-gray-700/50'
+            },
+            { 
+              icon: Linkedin, 
+              href: 'https://linkedin.com/in/tu-perfil', 
+              label: 'LinkedIn',
+              color: 'text-blue-400 hover:text-blue-300',
+              bgColor: 'hover:bg-blue-900/30'
+            },
+            { 
+              icon: Mail, 
+              href: 'mailto:tu-email@gmail.com', 
+              label: 'Email',
+              color: 'text-cyan-400 hover:text-cyan-300',
+              bgColor: 'hover:bg-cyan-900/30'
+            }
+          ].map((social, index) => (
+            <motion.a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group relative p-4 rounded-xl border border-gray-700/60 backdrop-blur-sm transition-all duration-300 ${social.bgColor}`}
+              variants={socialVariants}
+              whileHover="hover"
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: index * 0.1 }}
+            >
+              <motion.div
+                whileHover={{ rotate: 12 }}
+                transition={{ duration: 0.3 }}
+              >
+                <social.icon className={`w-6 h-6 transition-colors duration-300 ${social.color}`} />
+              </motion.div>
+              
+              {/* Tooltip */}
+              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-sm px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none font-mono">
+                {social.label}
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45" />
+              </div>
+            </motion.a>
+          ))}
         </motion.div>
 
         {/* Scroll indicator */}
