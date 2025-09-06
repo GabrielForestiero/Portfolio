@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Menu, X, User, ShoppingCart, Bell } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Menu, X, ShoppingCart, Bell, Terminal, Code2, Zap } from 'lucide-react';
 
 interface HeaderProps {
   logo?: string;
@@ -18,109 +18,149 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({
   logo,
-  title = "Mi App",
+  title = "Gabriel Forestiero",
   showNotifications = false,
   showCart = false,
   cartCount = 0,
-  onLogin,
   onCart,
   menuItems = [
-    { label: "Inicio", href: "#" },
-    { label: "Productos", href: "#" },
-    { label: "Servicios", href: "#" },
-    { label: "Contacto", href: "#" }
+    { label: "home.init()", href: "#" },
+    { label: "projects.exe", href: "#projects" },
+    { label: "skills.json", href: "#skills" },
+    { label: "contact.md", href: "#contact" }
   ]
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [glitchActive, setGlitchActive] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Efecto glitch para el título
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Math.random() < 0.1) {
+        setGlitchActive(true);
+        setTimeout(() => setGlitchActive(false), 200);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <header className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50 w-full">
-      <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo y título */}
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center">
-              {logo ? (
-                <img src={logo} alt={title} className="h-8 w-auto" />
-              ) : (
-                <div className="h-8 w-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">
-                    {title.charAt(0)}
+    <>
+      <header className="bg-slate-900 backdrop-blur-xl fixed top-0 z-50 w-full">
+        {/* Línea superior sutil */}
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"></div>
+
+        <div className="w-full px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo y título */}
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center group cursor-pointer">
+                {logo ? (
+                  <img src={logo} alt={title} className="h-10 w-auto" />
+                ) : (
+                  <div className="relative">
+                    <div className="h-10 w-10 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg flex items-center justify-center border border-cyan-400/50 shadow-lg shadow-cyan-400/30">
+                      <Terminal className="text-white w-5 h-5" />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg animate-pulse opacity-30"></div>
+                  </div>
+                )}
+                <div className="ml-3">
+                  <span className={`text-xl font-mono font-bold text-white hidden sm:block transition-all duration-200 ${
+                    glitchActive ? 'animate-pulse text-cyan-400' : ''
+                  }`}>
+                    <span className="text-cyan-400 mr-2">&gt;</span>
+                    {title}
+                    <span className="text-cyan-400 ml-2 animate-pulse">_</span>
                   </span>
+                  <div className="text-xs font-mono text-cyan-400/70 hidden sm:block">
+                    developer.exe
+                  </div>
                 </div>
-              )}
-              <span className="ml-2 text-xl font-bold text-gray-900 hidden sm:block">
-                {title}
-              </span>
+              </div>
+            </div>
+
+            {/* Navegación desktop y acciones a la derecha */}
+            <div className="flex items-center space-x-6">
+              {/* Navegación desktop */}
+              <nav className="hidden md:flex space-x-2">
+                {menuItems.map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.href}
+                    onClick={item.onClick}
+                    className="group relative text-blue-200 hover:text-cyan-400 px-4 py-2 font-mono text-sm font-medium transition-all duration-300 border border-transparent hover:border-cyan-400/30 rounded-lg backdrop-blur-sm hover:bg-cyan-400/5"
+                  >
+                    <span className="relative z-10 flex items-center gap-2">
+                      <Code2 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
+                      {item.label}
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 to-purple-400/10 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                  </a>
+                ))}
+              </nav>
+
+              {/* Iconos de acción */}
+              <div className="flex items-center space-x-3">
+                {/* Notificaciones */}
+                {showNotifications && (
+                  <button className="p-2 text-blue-300 hover:text-cyan-400 hover:bg-cyan-400/10 rounded-lg transition-all duration-300 relative border border-transparent hover:border-cyan-400/30 backdrop-blur-sm">
+                    <Bell className="w-5 h-5" />
+                    <div className="absolute top-1 right-1 w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
+                    <div className="absolute top-1 right-1 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                  </button>
+                )}
+
+                {/* Carrito */}
+                {showCart && (
+                  <button 
+                    onClick={onCart}
+                    className="p-2 text-blue-300 hover:text-cyan-400 hover:bg-cyan-400/10 rounded-lg transition-all duration-300 relative border border-transparent hover:border-cyan-400/30 backdrop-blur-sm"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    {cartCount > 0 && (
+                      <span className="absolute -top-1 -right-1 h-5 w-5 bg-gradient-to-r from-cyan-500 to-purple-600 text-white text-xs rounded-full flex items-center justify-center font-mono border border-cyan-400/50">
+                        {cartCount > 99 ? '99+' : cartCount}
+                      </span>
+                    )}
+                  </button>
+                )}
+
+                {/* Menú hamburguesa mobile */}
+                <button
+                  onClick={toggleMenu}
+                  className="md:hidden group p-2 text-blue-300 hover:text-cyan-400 hover:bg-cyan-400/10 rounded-lg transition-all duration-300 border border-transparent hover:border-cyan-400/30 backdrop-blur-sm"
+                >
+                  {isMenuOpen ? (
+                    <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+                  ) : (
+                    <Menu className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
-
-          {/* Navegación desktop */}
-          <nav className="hidden md:flex space-x-8 flex-1 justify-center">
-            {menuItems.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                onClick={item.onClick}
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-blue-50"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Iconos de acción */}
-          <div className="flex items-center space-x-4">
-            {/* Notificaciones */}
-            {showNotifications && (
-              <button className="p-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200 relative">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-              </button>
-            )}
-
-            {/* Carrito */}
-            {showCart && (
-              <button 
-                onClick={onCart}
-                className="p-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200 relative"
-              >
-                <ShoppingCart className="w-5 h-5" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                    {cartCount > 99 ? '99+' : cartCount}
-                  </span>
-                )}
-              </button>
-            )}
-
-            {/* Usuario */}
-            <button 
-              onClick={onLogin}
-              className="p-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
-            >
-              <User className="w-5 h-5" />
-            </button>
-
-            {/* Menú hamburguesa mobile */}
-            <button
-              onClick={toggleMenu}
-              className="md:hidden p-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
-            >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
         </div>
-      </div>
+      </header>
 
       {/* Menú mobile */}
-      {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">            
+      <div className={`md:hidden fixed inset-x-0 top-20 z-40 transform transition-all duration-300 ease-in-out ${
+        isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
+      }`}>
+        <div className="bg-indigo-950/90 backdrop-blur-xl border border-indigo-700/30 mx-4 rounded-2xl shadow-2xl overflow-hidden">
+          <div className="relative z-10 px-6 py-4 space-y-2">
+            {/* Header del menú */}
+            <div className="flex items-center justify-center mb-6 pb-4 border-b border-cyan-400/20">
+              <Zap className="w-4 h-4 text-cyan-400 mr-2" />
+              <span className="font-mono text-sm text-cyan-400">NAVIGATION.menu</span>
+              <Zap className="w-4 h-4 text-cyan-400 ml-2" />
+            </div>
+
             {/* Items del menú mobile */}
             {menuItems.map((item, index) => (
               <a
@@ -133,15 +173,33 @@ const Header: React.FC<HeaderProps> = ({
                   }
                   setIsMenuOpen(false);
                 }}
-                className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                className="group items-center gap-3 text-gray-300 hover:text-cyan-400 hover:bg-cyan-400/10 block px-4 py-3 rounded-lg font-mono text-base font-medium transition-all duration-300 border border-transparent hover:border-cyan-400/30 backdrop-blur-sm"
               >
-                {item.label}
+                <Code2 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
+                <span className="flex-1">{item.label}</span>
+                <span className="text-xs text-cyan-400/60 group-hover:text-cyan-400">→</span>
               </a>
             ))}
           </div>
         </div>
-      )}
-    </header>
+
+        {/* Overlay */}
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm -z-10"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      </div>
+
+      <style>{`
+        @keyframes glitch {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-2px); }
+          40% { transform: translateX(2px); }
+          60% { transform: translateX(-1px); }
+          80% { transform: translateX(1px); }
+        }
+      `}</style>
+    </>
   );
 };
 
