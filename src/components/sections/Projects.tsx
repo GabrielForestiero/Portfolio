@@ -1,6 +1,11 @@
-import { ExternalLink, Github } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ExternalLink, Github, Code, Zap, Globe, Smartphone, BarChart3 } from 'lucide-react';
 
 const ProjectsSection = () => {
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [glitchIndex, setGlitchIndex] = useState(-1);
+
   const projects = [
     {
       title: "E-commerce Platform",
@@ -8,7 +13,10 @@ const ProjectsSection = () => {
       image: "",
       techs: ["React", "Node.js", "MongoDB", "Stripe"],
       demoLink: "#",
-      codeLink: "#"
+      codeLink: "#",
+      icon: Globe,
+      status: "DEPLOYED",
+      lines: "~15,000"
     },
     {
       title: "Task Manager App",
@@ -16,7 +24,10 @@ const ProjectsSection = () => {
       image: "",
       techs: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"],
       demoLink: "#",
-      codeLink: "#"
+      codeLink: "#",
+      icon: Code,
+      status: "BETA",
+      lines: "~8,500"
     },
     {
       title: "Weather Dashboard",
@@ -24,7 +35,10 @@ const ProjectsSection = () => {
       image: "",
       techs: ["React", "Chart.js", "Weather API", "Tailwind"],
       demoLink: "#",
-      codeLink: "#"
+      codeLink: "#",
+      icon: BarChart3,
+      status: "LIVE",
+      lines: "~6,200"
     },
     {
       title: "Social Media App",
@@ -32,72 +46,315 @@ const ProjectsSection = () => {
       image: "",
       techs: ["React Native", "Firebase", "Redux", "Expo"],
       demoLink: "#",
-      codeLink: "#"
+      codeLink: "#",
+      icon: Smartphone,
+      status: "DEV",
+      lines: "~12,300"
     }
   ];
 
-  return (
-    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Mis Proyectos</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Una selección de mis trabajos más recientes y destacados
-          </p>
-        </div>
+  // Glitch effect for project titles
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Math.random() < 0.1) {
+        setGlitchIndex(Math.floor(Math.random() * projects.length));
+        setTimeout(() => setGlitchIndex(-1), 200);
+      }
+    }, 2000);
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-              <div className="relative group">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
-                  <a
-                    href={project.demoLink}
-                    className="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    Demo
-                  </a>
-                  <a
-                    href={project.codeLink}
-                    className="bg-gray-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200 flex items-center gap-2"
-                  >
-                    <Github className="w-4 h-4" />
-                    Código
-                  </a>
-                </div>
-              </div>
-              
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                <p className="text-gray-600 mb-4 leading-relaxed">{project.description}</p>
-                
-                <div className="flex flex-wrap gap-2">
-                  {project.techs.map((tech, techIndex) => (
-                    <span key={techIndex} className="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+    return () => clearInterval(interval);
+  }, []);
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'DEPLOYED': return 'text-green-400';
+      case 'LIVE': return 'text-cyan-400';
+      case 'BETA': return 'text-yellow-400';
+      case 'DEV': return 'text-purple-400';
+      default: return 'text-gray-400';
+    }
+  };
+
+  return (
+    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        {/* Matrix rain - lighter */}
+        <div className="absolute inset-0 overflow-hidden opacity-3">
+          {Array.from({ length: 15 }, (_, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-cyan-400/20 font-mono text-xs whitespace-pre"
+              style={{ left: `${i * 7}%` }}
+              animate={{
+                y: ['0vh', '150vh']
+              }}
+              transition={{
+                duration: 20 + Math.random() * 10,
+                repeat: Infinity,
+                ease: "linear",
+                delay: Math.random() * 20
+              }}
+            >
+              {Array.from({ length: 30 }, () => 
+                String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))
+              ).join('\n')}
+            </motion.div>
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <a
-            href="https://github.com/tuusuario"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
-          >
-            Ver más proyectos en GitHub
-            <ExternalLink className="w-4 h-4" />
-          </a>
+        {/* Circuit lines */}
+        <div className="absolute inset-0 opacity-5">
+          <svg className="w-full h-full">
+            {Array.from({ length: 6 }, (_, i) => (
+              <motion.g key={i}>
+                <motion.path
+                  d={`M0,${100 + i * 150} L200,${100 + i * 150} L300,${50 + i * 150} L500,${50 + i * 150}`}
+                  stroke="#00ffff"
+                  strokeWidth="1"
+                  fill="none"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 2, delay: i * 0.3 }}
+                />
+                <motion.circle
+                  cx={200 + i * 100}
+                  cy={75 + i * 150}
+                  r="3"
+                  fill="#00ffff"
+                  animate={{
+                    opacity: [0.3, 1, 0.3],
+                    scale: [0.8, 1.2, 0.8]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: i * 0.5
+                  }}
+                />
+              </motion.g>
+            ))}
+          </svg>
         </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header */}
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div className="mb-6">
+          
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-mono font-bold text-white mb-4">
+              <motion.span
+                animate={{
+                  textShadow: [
+                    '0 0 20px rgba(0, 255, 255, 0.5)',
+                    '0 0 40px rgba(0, 255, 255, 0.8)',
+                    '0 0 20px rgba(0, 255, 255, 0.5)'
+                  ]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                MIS PROYECTOS
+              </motion.span>
+            </h2>
+          </motion.div>
+          <motion.div 
+            className="flex items-center justify-center gap-6 mb-6"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+          >
+            <div className="h-px bg-cyan-400 w-24"></div>
+          
+            <div className="h-px bg-cyan-400 w-24"></div>
+          </motion.div>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto font-mono">
+            Una selección de mis trabajos más recientes y destacados
+          </p>
+        </motion.div>
+
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {projects.map((project, index) => {
+            const IconComponent = project.icon;
+            return (
+              <motion.div
+                key={index}
+                className="group relative bg-gray-900/70 backdrop-blur-sm border border-gray-700/60 rounded-xl overflow-hidden hover:border-cyan-400/60 transition-all duration-500"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                onHoverStart={() => setHoveredProject(index)}
+                onHoverEnd={() => setHoveredProject(null)}
+                whileHover={{ y: -8, scale: 1.02 }}
+              >
+                {/* Status indicator */}
+                <div className="absolute top-4 right-4 z-20">
+                  <div className="flex items-center gap-2 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-600">
+                    <motion.div
+                      className={`w-2 h-2 rounded-full ${getStatusColor(project.status).replace('text-', 'bg-')}`}
+                      animate={{
+                        opacity: [1, 0.3, 1]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    <span className={`text-xs font-mono ${getStatusColor(project.status)}`}>
+                      {project.status}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Project image placeholder with circuit pattern */}
+                <div className="relative h-48 bg-black/80 border-b border-gray-700/60 overflow-hidden">
+                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                    <motion.div
+                      animate={{
+                        rotate: hoveredProject === index ? 360 : 0,
+                        scale: hoveredProject === index ? 1.2 : 1
+                      }}
+                      transition={{ duration: 0.8 }}
+                    >
+                      <IconComponent className="w-16 h-16 text-cyan-400/60" />
+                    </motion.div>
+                  </div>
+                  
+                  {/* Circuit overlay */}
+                  <svg className="absolute inset-0 w-full h-full opacity-20">
+                    <motion.path
+                      d="M0,96 L48,96 L64,80 L128,80 L144,96 L192,96"
+                      stroke="#00ffff"
+                      strokeWidth="1"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: hoveredProject === index ? 1 : 0 }}
+                      transition={{ duration: 1 }}
+                    />
+                    <motion.path
+                      d="M96,0 L96,48 L112,64 L112,128 L96,144 L96,192"
+                      stroke="#00ffff"
+                      strokeWidth="1"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: hoveredProject === index ? 1 : 0 }}
+                      transition={{ duration: 1, delay: 0.2 }}
+                    />
+                  </svg>
+
+                  {/* Hover overlay with buttons */}
+                  <motion.div
+                    className="absolute inset-0 bg-black/80 flex items-center justify-center space-x-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: hoveredProject === index ? 1 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <motion.a
+                      href={project.demoLink}
+                      className="bg-cyan-400 text-black px-6 py-3 rounded-lg font-mono font-bold hover:bg-cyan-300 transition-colors duration-200 flex items-center gap-2"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      DEMO
+                    </motion.a>
+                    <motion.a
+                      href={project.codeLink}
+                      className="border-2 border-cyan-400 text-cyan-400 px-6 py-3 rounded-lg font-mono font-bold hover:bg-cyan-400 hover:text-black transition-all duration-200 flex items-center gap-2"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Github className="w-4 h-4" />
+                      CODE
+                    </motion.a>
+                  </motion.div>
+                </div>
+                
+                <div className="p-6">
+                  {/* Project info header */}
+                  <div className="flex items-center justify-between mb-3">
+                    <motion.h3 
+                      className="text-xl font-mono font-bold text-white"
+                      animate={{
+                        x: glitchIndex === index ? [-2, 2, -1, 1, 0] : 0
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {project.title}
+                    </motion.h3>
+                    <span className="text-xs font-mono text-gray-400 bg-gray-800/60 px-2 py-1 rounded">
+                      {project.lines} lines
+                    </span>
+                  </div>
+                  
+                  <p className="text-gray-300 mb-6 leading-relaxed font-mono text-sm">
+                    {project.description}
+                  </p>
+                  
+                  {/* Tech stack */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.techs.map((tech, techIndex) => (
+                      <motion.span 
+                        key={techIndex} 
+                        className="bg-slate-700/80 border border-cyan-400/30 text-cyan-400 text-xs px-3 py-1 rounded-full font-mono"
+                        whileHover={{ 
+                          scale: 1.1,
+                          backgroundColor: 'rgba(0, 255, 255, 0.1)'
+                        }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {tech}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Corner decorations */}
+                <div className="absolute inset-0 pointer-events-none opacity-30 group-hover:opacity-60 transition-opacity duration-500">
+                  <div className="absolute top-2 left-2 w-4 h-4 border-l border-t border-cyan-400/60" />
+                  <div className="absolute top-2 right-2 w-4 h-4 border-r border-t border-cyan-400/60" />
+                  <div className="absolute bottom-2 left-2 w-4 h-4 border-l border-b border-cyan-400/60" />
+                  <div className="absolute bottom-2 right-2 w-4 h-4 border-r border-b border-cyan-400/60" />
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Footer */}
+        <motion.div 
+          className="text-center mt-16"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1 }}
+        >
+          <motion.div className="mb-6">
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <div className="h-px bg-cyan-400/30 w-16"></div>
+              <Zap className="w-5 h-5 text-cyan-400" />
+              <div className="h-px bg-cyan-400/30 w-16"></div>
+            </div>
+          </motion.div>
+          
+          <motion.a
+            href="https://github.com/tuusuario"
+            className="group inline-flex items-center gap-3 text-cyan-400 hover:text-white font-mono text-lg border-2 border-cyan-400/60 hover:border-cyan-400 px-8 py-4 rounded-xl hover:bg-cyan-400/10 transition-all duration-300"
+            whileHover={{ scale: 1.05, y: -4 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Github className="w-5 h-5" />
+            <span>VER_MAS_PROYECTOS.sh</span>
+            <motion.div
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <ExternalLink className="w-4 h-4" />
+            </motion.div>
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );

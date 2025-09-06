@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Calendar, MapPin, Users, Code, Briefcase, ChevronRight, Award, TrendingUp, Target } from 'lucide-react';
+import  { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Users, Code, ChevronRight,  Target } from 'lucide-react';
 
 const ExperienceSection = () => {
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
@@ -9,82 +10,48 @@ const ExperienceSection = () => {
       id: 1,
       title: 'Desarrollador Frontend SSR',
       company: 'Oppers',
-      period: 'Oct 2024 - Presente',
-      duration: '3 meses',
+      period: 'Oct. 2024 - Presente',
       location: 'Buenos Aires, Argentina',
-      type: 'Frontend Specialist',
-      typeColor: 'bg-purple-100 text-purple-800',
+      type: 'Especialización Frontend',
       status: 'current',
-      companySize: 'Startup',
-      summary: 'Especialización en desarrollo Frontend con React y TypeScript, enfocado en arquitectura escalable y sistemas de componentes.',
+      description: 'Me especialicé en desarrollo Front-End con React y TypeScript, entregando código escalable y mantenible. Diseñé e implementé sistemas de componentes modulares que estandarizaron patrones de UI en toda la organización. Optimicé el rendimiento mediante la gestión eficiente de estado y estrategias de renderizado de componentes.',
       keyAchievements: [
-        {
-          icon: Target,
-          text: 'Especialización completa en desarrollo Front-End con React y TypeScript',
-          impact: 'Transición exitosa de FullStack a Frontend Specialist'
-        },
-        {
-          icon: Code,
-          text: 'Diseñé e implementé sistemas de componentes modulares',
-          impact: 'Estandarización de UI en toda la organización'
-        },
-        {
-          icon: TrendingUp,
-          text: 'Optimicé rendimiento mediante gestión eficiente de estado',
-          impact: 'Mejora en performance y UX de aplicaciones'
-        }
+        'Especialización completa en desarrollo Front-End con React y TypeScript',
+        'Sistemas de componentes modulares para estandarización de UI',
+        'Optimización de rendimiento y gestión eficiente de estado'
       ],
-      technologies: {
-        primary: ['React', 'TypeScript', 'Next.js'],
-        secondary: ['Component Libraries', 'Performance Optimization', 'State Management']
-      },
-      responsibilities: [
-        'Desarrollo de interfaces de usuario escalables y mantenibles',
-        'Implementación de patrones de diseño y arquitectura Frontend',
-        'Optimización de performance y experiencia de usuario',
-        'Colaboración con equipos de diseño y backend'
+      technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Component Libraries'],
+      references: [
+        {
+          name: 'Nicolás Andrés Hoffmann',
+          role: 'CTO en Oppers',
+          phone: '+54 9 11 6501-4422',
+          linkedin: 'https://www.linkedin.com/in/nicoahoffmann/'
+        },
+        {
+          name: 'Lucas Amado Córdoba',
+          role: 'Technical Leader en Oppers',
+          phone: '+54 9 11 3399 7178',
+          linkedin: 'https://www.linkedin.com/in/lucas-amado-cordoba/'
+        }
       ]
     },
     {
       id: 2,
-      title: 'Desarrollador FullStack',
+      title: 'Desarrollador Full Stack',
       company: 'Grava Digital',
-      period: 'Ago 2021 - Sep 2024',
-      duration: '3 años 1 mes',
+      period: 'Ago. 2021 - Sep. 2024',
       location: 'Buenos Aires, Argentina',
-      type: 'FullStack & Team Lead',
-      typeColor: 'bg-blue-100 text-blue-800',
+      type: 'Desarrollo & Liderazgo',
       status: 'completed',
-      companySize: 'Agencia Digital',
-      summary: 'Desarrollo FullStack y liderazgo técnico en múltiples proyectos, con enfoque en metodologías ágiles y mentoring.',
+      description: 'Participé en más de 10 proyectos, desarrollando y manteniendo aplicaciones con tecnologías como React, Next.js y Angular en el frontend, y Node.js con Express en el backend. Lideré un equipo de desarrollo, mejorando la eficiencia en las entregas y capacitando a desarrolladores junior. Trabajé mediante la metodología Scrum, facilitando reuniones diarias y planificación de sprints para mejorar la colaboración del equipo y optimizar los tiempos de entrega.',
       keyAchievements: [
-        {
-          icon: Award,
-          text: 'Participé en más de 10 proyectos exitosos',
-          impact: 'Experiencia diversa en diferentes industrias y tecnologías'
-        },
-        {
-          icon: Users,
-          text: 'Lideré un equipo de desarrollo mejorando la eficiencia',
-          impact: 'Reducción de tiempos de entrega y mejor calidad de código'
-        },
-        {
-          icon: TrendingUp,
-          text: 'Implementé metodología Scrum y capacité developers junior',
-          impact: 'Mejora en procesos y crecimiento del equipo'
-        }
+        'Participación en más de 10 proyectos exitosos',
+        'Liderazgo de equipo de desarrollo y mentoring de developers junior',
+        'Implementación de metodología Scrum y optimización de entregas'
       ],
-      technologies: {
-        primary: ['React', 'Next.js', 'Node.js', 'Express'],
-        secondary: ['Angular', 'MongoDB', 'MySQL', 'PostgreSQL', 'Scrum', 'Team Leadership']
-      },
-      responsibilities: [
-        'Desarrollo full-stack de aplicaciones web complejas',
-        'Liderazgo técnico y mentoring de desarrolladores junior',
-        'Implementación de metodologías ágiles (Scrum)',
-        'Arquitectura de soluciones escalables y mantenibles',
-        'Coordinación con stakeholders y planificación de sprints'
-      ]
+      technologies: ['React', 'Next.js', 'Angular', 'Node.js', 'Express', 'MongoDB', 'MySQL', 'PostgreSQL', 'Scrum'],
+      references: []
     }
   ];
 
@@ -92,202 +59,282 @@ const ExperienceSection = () => {
     setExpandedCard(expandedCard === cardId ? null : cardId);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -30 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.6, ease: "easeOut" as const }
+    }
+  };
+
   return (
-    <section id="experience" className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-white">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
-            <Briefcase className="w-4 h-4" />
-            Experiencia Profesional
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Mi Trayectoria</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            4+ años evolucionando desde FullStack hasta especialista Frontend, 
-            con experiencia en liderazgo técnico y metodologías ágiles
-          </p>
-        </div>
-
-        {/* Evolution Timeline */}
-        <div className="flex justify-center mb-12">
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 max-w-lg">
-            <div className="flex items-center justify-between text-sm">
-              <div className="text-center">
-                <div className="w-3 h-3 bg-blue-500 rounded-full mx-auto mb-2"></div>
-                <div className="font-medium text-gray-900">2021</div>
-                <div className="text-gray-600">FullStack Start</div>
-              </div>
-              <div className="flex-1 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 mx-4"></div>
-              <div className="text-center">
-                <div className="w-3 h-3 bg-purple-500 rounded-full mx-auto mb-2"></div>
-                <div className="font-medium text-gray-900">2024</div>
-                <div className="text-gray-600">Frontend Specialist</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Experience Cards */}
-        <div className="space-y-6">
-          {experiences.map((exp, index) => (
-            <div key={exp.id} className="relative">
-              {/* Timeline connector */}
-              {index !== experiences.length - 1 && (
-                <div className="absolute left-8 top-20 w-0.5 h-16 bg-gray-300 z-0"></div>
-              )}
-              
-              <div className="relative bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-                {/* Status indicator */}
-                {exp.status === 'current' && (
-                  <div className="absolute top-0 right-0 bg-green-500 text-white px-3 py-1 text-xs font-medium">
-                    ACTUAL
-                  </div>
-                )}
-
-                <div className="p-8">
-                  {/* Header */}
-                  <div className="flex items-start gap-6 mb-6">
-                    <div className="flex-shrink-0">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                        <Briefcase className="w-8 h-8 text-white" />
-                      </div>
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-                        <div>
-                          <h3 className="text-2xl font-bold text-gray-900 mb-2">{exp.title}</h3>
-                          <div className="flex items-center gap-3 mb-3">
-                            <p className="text-xl font-semibold text-blue-600">{exp.company}</p>
-                            <span className="text-gray-300">•</span>
-                            <span className="text-gray-600">{exp.companySize}</span>
-                          </div>
-                          
-                          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="w-4 h-4" />
-                              <span>{exp.period}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <span className="w-4 h-4 flex items-center justify-center">⏱</span>
-                              <span>{exp.duration}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <MapPin className="w-4 h-4" />
-                              <span>{exp.location}</span>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex flex-col items-start lg:items-end gap-3">
-                          <span className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium ${exp.typeColor}`}>
-                            {exp.type}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Summary */}
-                  <p className="text-gray-700 mb-6 text-lg leading-relaxed">{exp.summary}</p>
-
-                  {/* Key Achievements */}
-                  <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-4">Logros Principales</h4>
-                    <div className="grid gap-4">
-                      {exp.keyAchievements.map((achievement, idx) => {
-                        const IconComponent = achievement.icon;
-                        return (
-                          <div key={idx} className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
-                            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <IconComponent className="w-4 h-4 text-blue-600" />
-                            </div>
-                            <div>
-                              <p className="font-medium text-gray-900 mb-1">{achievement.text}</p>
-                              <p className="text-sm text-gray-600">{achievement.impact}</p>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Technologies */}
-                  <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-4">Tecnologías</h4>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-sm font-medium text-gray-700 mb-2">Principales:</p>
-                        <div className="flex flex-wrap gap-2">
-                          {exp.technologies.primary.map((tech, idx) => (
-                            <span key={idx} className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-700 mb-2">Complementarias:</p>
-                        <div className="flex flex-wrap gap-2">
-                          {exp.technologies.secondary.map((tech, idx) => (
-                            <span key={idx} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Expandable Responsibilities */}
-                  <div>
-                    <button
-                      onClick={() => toggleExpand(exp.id)}
-                      className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-4"
-                    >
-                      <span>Responsabilidades principales</span>
-                      <ChevronRight className={`w-4 h-4 transition-transform duration-200 ${expandedCard === exp.id ? 'rotate-90' : ''}`} />
-                    </button>
-                    
-                    {expandedCard === exp.id && (
-                      <div className="bg-blue-50 rounded-xl p-4 space-y-2">
-                        {exp.responsibilities.map((responsibility, idx) => (
-                          <div key={idx} className="flex items-start gap-2">
-                            <ChevronRight className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                            <span className="text-gray-700 text-sm">{responsibility}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+    <section id="experience" className="relative py-20 px-4 sm:px-6 lg:px-8 bg-slate-900 overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        {/* Matrix rain sutil */}
+        <div className="absolute inset-0 overflow-hidden opacity-5">
+          {Array.from({ length: 6 }, (_, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-cyan-400/30 font-mono text-xs whitespace-pre"
+              style={{ left: `${i * 15}%` }}
+              animate={{
+                y: ['0vh', '200vh']
+              }}
+              transition={{
+                duration: 20 + Math.random() * 10,
+                repeat: Infinity,
+                ease: "linear",
+                delay: Math.random() * 20
+              }}
+            >
+              {Array.from({ length: 25 }, () => 
+                Math.random() > 0.5 ? '1' : '0'
+              ).join('\n')}
+            </motion.div>
           ))}
         </div>
 
-        {/* Summary Stats */}
-        <div className="mt-12 bg-white rounded-2xl border border-gray-200 shadow-lg p-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-            <div className="p-4">
-              <div className="text-3xl font-bold text-blue-600 mb-2">4+</div>
-              <div className="text-gray-600">Años de experiencia</div>
-            </div>
-            <div className="p-4">
-              <div className="text-3xl font-bold text-green-600 mb-2">10+</div>
-              <div className="text-gray-600">Proyectos completados</div>
-            </div>
-            <div className="p-4">
-              <div className="text-3xl font-bold text-purple-600 mb-2">2</div>
-              <div className="text-gray-600">Años especializándome</div>
-            </div>
-            <div className="p-4">
-              <div className="text-3xl font-bold text-orange-600 mb-2">1</div>
-              <div className="text-gray-600">Equipo liderado</div>
-            </div>
-          </div>
+        {/* Conexiones hexagonales */}
+        <div className="absolute inset-0 opacity-5">
+          <svg className="w-full h-full">
+            {Array.from({ length: 4 }, (_, i) => (
+              <motion.g
+                key={i}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.3 }}
+                transition={{ duration: 2, delay: i * 0.5 }}
+              >
+                <polygon
+                  points="50,25 75,37.5 75,62.5 50,75 25,62.5 25,37.5"
+                  stroke="#00ffff"
+                  strokeWidth="0.5"
+                  fill="none"
+                  transform={`translate(${i * 300 + 100}, ${(i % 2) * 300 + 150})`}
+                />
+              </motion.g>
+            ))}
+          </svg>
         </div>
       </div>
+
+      <motion.div 
+        className="max-w-4xl mx-auto relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {/* Header */}
+        <motion.div className="mb-16" variants={itemVariants}>
+          <div className="flex items-center gap-3 mb-8">
+            <motion.div 
+              className="w-6 h-6 bg-emerald-500 rounded-sm"
+              animate={{ 
+                boxShadow: ['0 0 0 rgba(16, 185, 129, 0)', '0 0 20px rgba(16, 185, 129, 0.3)', '0 0 0 rgba(16, 185, 129, 0)']
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <h2 className="text-3xl sm:text-4xl font-bold text-white">
+              Experiencia
+            </h2>
+          </div>
+        </motion.div>
+
+        {/* Timeline */}
+        <div className="relative">
+          {/* Timeline line */}
+          <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-gray-700"></div>
+          
+          <div className="space-y-12">
+            {experiences.map((exp) => (
+              <motion.div 
+                key={exp.id}
+                className="relative"
+                variants={itemVariants}
+              >
+                {/* Timeline dot */}
+                <motion.div 
+                  className="absolute left-0 w-6 h-6 bg-gray-600 rounded-full border-4 border-black z-10"
+                  whileHover={{ 
+                    backgroundColor: '#10b981',
+                    scale: 1.2
+                  }}
+                  transition={{ duration: 0.2 }}
+                />
+                
+                {/* Content */}
+                <div className="ml-12">
+                  <motion.div 
+                    className="group cursor-pointer"
+                    whileHover={{ x: 8 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {/* Header */}
+                    <div className="mb-4">
+                      <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">
+                        {exp.title}
+                      </h3>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-emerald-400 font-semibold">{exp.company}</span>
+                        <span className="text-gray-400">•</span>
+                        <span className="text-gray-400 text-sm">{exp.period}</span>
+                      </div>
+                      
+                      {exp.status === 'current' && (
+                        <motion.span 
+                          className="inline-block bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-medium border border-emerald-500/30"
+                          animate={{ opacity: [0.7, 1, 0.7] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          ACTUAL
+                        </motion.span>
+                      )}
+                    </div>
+
+                    {/* Description */}
+                    <div className="mb-6">
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        {exp.description}
+                      </p>
+                    </div>
+
+                    {/* Expandable content */}
+                    <motion.button
+                      onClick={() => toggleExpand(exp.id)}
+                      className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm font-medium mb-4 transition-colors"
+                      whileHover={{ x: 4 }}
+                    >
+                      <span>Ver detalles</span>
+                      <motion.div
+                        animate={{ rotate: expandedCard === exp.id ? 90 : 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </motion.div>
+                    </motion.button>
+
+                    <AnimatePresence>
+                      {expandedCard === exp.id && (
+                        <motion.div 
+                          className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 space-y-6"
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {/* Key Achievements */}
+                          <div>
+                            <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                              <Target className="w-4 h-4 text-emerald-400" />
+                              Logros principales
+                            </h4>
+                            <ul className="space-y-2">
+                              {exp.keyAchievements.map((achievement, idx) => (
+                                <motion.li 
+                                  key={idx}
+                                  className="flex items-start gap-2 text-gray-300 text-sm"
+                                  initial={{ opacity: 0, x: -20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: idx * 0.1 }}
+                                >
+                                  <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
+                                  <span>{achievement}</span>
+                                </motion.li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* Technologies */}
+                          <div>
+                            <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                              <Code className="w-4 h-4 text-emerald-400" />
+                              Tecnologías utilizadas
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {exp.technologies.map((tech, idx) => (
+                                <motion.span 
+                                  key={idx}
+                                  className="px-3 py-1 bg-gray-800 text-gray-300 text-xs rounded-full border border-gray-700"
+                                  initial={{ opacity: 0, scale: 0.8 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{ delay: idx * 0.05 }}
+                                  whileHover={{ 
+                                    backgroundColor: 'rgb(16, 185, 129, 0.2)',
+                                    borderColor: 'rgb(16, 185, 129, 0.5)',
+                                    color: '#10b981'
+                                  }}
+                                >
+                                  {tech}
+                                </motion.span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* References */}
+                          {exp.references.length > 0 && (
+                            <div>
+                              <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                                <Users className="w-4 h-4 text-emerald-400" />
+                                Referencias
+                              </h4>
+                              <div className="grid gap-4">
+                                {exp.references.map((ref, idx) => (
+                                  <motion.div 
+                                    key={idx}
+                                    className="bg-gray-800/50 border border-gray-700 rounded-lg p-4"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.1 }}
+                                  >
+                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                      <div>
+                                        <p className="text-white font-medium text-sm">{ref.name}</p>
+                                        <p className="text-gray-400 text-xs">{ref.role}</p>
+                                      </div>
+                                      <div className="flex flex-col sm:items-end gap-1">
+                                        <a 
+                                          href={`tel:${ref.phone}`}
+                                          className="text-emerald-400 text-xs hover:text-emerald-300 transition-colors"
+                                        >
+                                          {ref.phone}
+                                        </a>
+                                        <a 
+                                          href={ref.linkedin}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-blue-400 text-xs hover:text-blue-300 transition-colors"
+                                        >
+                                          LinkedIn
+                                        </a>
+                                      </div>
+                                    </div>
+                                  </motion.div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
     </section>
   );
 };

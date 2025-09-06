@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Github, Linkedin, Mail, Send } from 'lucide-react';
+import { useState } from 'react';
+import { Github, Linkedin, Mail, Send, MapPin, Code, Terminal } from 'lucide-react';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -8,93 +8,205 @@ const ContactSection = () => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simular envío
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
     console.log('Form submitted:', formData);
-    // Aquí integrarías con tu servicio de email preferido
     alert('¡Mensaje enviado! Te contactaré pronto.');
     setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(false);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
+
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">¡Trabajemos Juntos!</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            ¿Tienes un proyecto en mente? Me encantaría escuchar tus ideas y ver cómo puedo ayudarte
-          </p>
+    <section id="contact" className="relative min-h-screen bg-black py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Background similar al Hero */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-gray-900 to-black"></div>
+        
+        {/* Matrix rain sutil */}
+        <div className="absolute inset-0 overflow-hidden opacity-3">
+          {Array.from({ length: 8 }, (_, i) => (
+            <div
+              key={i}
+              className="absolute text-cyan-400/20 font-mono text-xs whitespace-pre animate-pulse"
+              style={{ 
+                left: `${i * 12}%`,
+                animationDelay: `${i * 2}s`,
+                animationDuration: `${20 + Math.random() * 10}s`
+              }}
+            >
+              {Array.from({ length: 30 }, () => 
+                Math.random() > 0.5 ? '1' : '0'
+              ).join('\n')}
+            </div>
+          ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Información de contacto */}
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Contáctame Directamente</h3>
+        {/* Conexiones hexagonales */}
+        <div className="absolute inset-0 opacity-5">
+          <svg className="w-full h-full">
+            {Array.from({ length: 6 }, (_, i) => (
+              <g
+                key={i}
+                style={{
+                  opacity: 0.3,
+                  animation: `fadeIn 2s ease-in-out ${i * 0.3}s both`
+                }}
+              >
+                <polygon
+                  points="60,30 90,45 90,75 60,90 30,75 30,45"
+                  stroke="#00ffff"
+                  strokeWidth="0.5"
+                  fill="none"
+                  transform={`translate(${i * 200 + 100}, ${(i % 2) * 300 + 150})`}
+                />
+              </g>
+            ))}
+          </svg>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header con estilo cyberpunk */}
+        <div className="text-center mb-16">
+          <h2 
+            className="text-3xl sm:text-4xl lg:text-5xl font-mono font-bold mb-6"
+            style={{
+              textShadow: '0 0 20px rgba(0, 255, 255, 0.3)',
+            }}
+          >
+            <span className="text-white">&gt;</span>
+            <span className="text-cyan-400 ml-2">CONTACTO</span>
+           
+          
+          </h2>
+          
+          <div className="flex items-center justify-center gap-6 mb-6">
+            <div 
+              className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent max-w-32"
+              style={{
+                animation: 'scaleX 1s ease-out 0.5s both',
+                transformOrigin: 'center'
+              }}
+            />
+            <div 
+              className="flex-1 h-px bg-gradient-to-l from-transparent via-cyan-400 to-transparent max-w-32"
+              style={{
+                animation: 'scaleX 1s ease-out 0.5s both',
+                transformOrigin: 'center'
+              }}
+            />
+          </div>
+          
+       
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
+          {/* Información de contacto con estilo cyberpunk - CENTRADO */}
+          <div className="flex flex-col items-center">
+            <h3 
+              className="text-2xl font-mono font-bold text-white mb-8 text-center"
+              style={{ textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}
+            >
+              <span className="text-cyan-400">$</span> CONECTAR DIRECTAMENTE
+            </h3>
             
-            <div className="space-y-6 mb-8">
-              <a
-                href="mailto:tu@email.com"
-                className="flex items-center gap-4 text-gray-600 hover:text-blue-600 transition-colors duration-200"
-              >
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">Email</p>
-                  <p>tu@email.com</p>
-                </div>
-              </a>
-
-              <a
-                href="https://linkedin.com/in/tuusuario"
-                className="flex items-center gap-4 text-gray-600 hover:text-blue-600 transition-colors duration-200"
-              >
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Linkedin className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">LinkedIn</p>
-                  <p>linkedin.com/in/tuusuario</p>
-                </div>
-              </a>
-
-              <a
-                href="https://github.com/tuusuario"
-                className="flex items-center gap-4 text-gray-600 hover:text-blue-600 transition-colors duration-200"
-              >
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Github className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">GitHub</p>
-                  <p>github.com/tuusuario</p>
-                </div>
-              </a>
-            </div>
-
-            <div className="bg-blue-50 p-6 rounded-lg">
-              <h4 className="font-semibold text-gray-900 mb-2">¿Preferís una llamada?</h4>
-              <p className="text-gray-600 text-sm">
-                Disponible para reuniones virtuales de Lunes a Viernes, 9:00 - 18:00 (GMT-3)
-              </p>
+            {/* Container centrado para las cards */}
+            <div className="w-full max-w-md space-y-6 mb-8">
+              {[
+                { 
+                  icon: Mail, 
+                  label: 'Email', 
+                  value: 'gabriel@forestiero.dev',
+                  href: 'mailto:gabriel@forestiero.dev',
+                  color: 'cyan'
+                },
+                { 
+                  icon: Linkedin, 
+                  label: 'LinkedIn', 
+                  value: 'linkedin.com/in/gabriel-forestiero',
+                  href: 'https://linkedin.com/in/gabriel-forestiero',
+                  color: 'blue'
+                },
+                { 
+                  icon: Github, 
+                  label: 'GitHub', 
+                  value: 'github.com/gabriel-forestiero',
+                  href: 'https://github.com/gabriel-forestiero',
+                  color: 'purple'
+                },
+                { 
+                  icon: MapPin, 
+                  label: 'Ubicación', 
+                  value: 'Buenos Aires, Argentina',
+                  href: '#',
+                  color: 'green'
+                }
+              ].map((contact, index) => (
+                <a
+                  key={contact.label}
+                  href={contact.href}
+                  className="group flex items-center gap-4 bg-gray-900/70 backdrop-blur-sm border border-gray-700/60 hover:border-cyan-400/60 p-4 rounded-lg transition-all duration-300 hover:bg-gray-800/80 hover:shadow-lg hover:shadow-cyan-400/20 hover:scale-[1.02] hover:translate-x-2"
+                  style={{
+                    opacity: 0,
+                    animation: `slideInLeft 0.8s ease-out ${index * 0.1}s both`
+                  }}
+                >
+                  <div
+                    className={`w-12 h-12 bg-gray-800 border border-gray-600 rounded-lg flex items-center justify-center group-hover:border-cyan-400 group-hover:bg-gray-700 transition-all duration-300 group-hover:rotate-12`}
+                  >
+                    <contact.icon className={`w-6 h-6 text-cyan-400`} />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-mono font-medium text-white group-hover:text-cyan-400 transition-colors">
+                      {contact.label}
+                    </p>
+                    <p className="text-sm text-gray-400 font-mono break-all">
+                      {contact.value}
+                    </p>
+                  </div>
+                  <div
+                    className="w-2 h-2 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-300"
+                  />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Formulario de contacto */}
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Envíame un Mensaje</h3>
+          {/* Formulario con estilo cyberpunk - CENTRADO */}
+          <div className="flex flex-col justify-center">
+            <h3 
+              className="text-2xl font-mono font-bold text-white mb-8 text-center"
+              style={{ textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}
+            >
+              <span className="text-purple-400">{'>'}</span> ENVIAR MENSAJE
+            </h3>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Nombre *
+            {/* Container centrado para el formulario */}
+            <div className="space-y-6">
+              <div
+                style={{
+                  opacity: 0,
+                  animation: 'slideInUp 0.8s ease-out 0.1s both'
+                }}
+              >
+                <label htmlFor="name" className="block text-sm font-mono font-medium text-cyan-400 mb-2">
+                  <Code className="w-4 h-4 inline mr-2" />
+                  NOMBRE *
                 </label>
                 <input
                   type="text"
@@ -103,14 +215,20 @@ const ContactSection = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                  placeholder="Tu nombre completo"
+                  className="w-full px-4 py-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300 text-white font-mono placeholder-gray-500 hover:border-gray-600"
+                  placeholder="Tu nombre completo..."
                 />
               </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email *
+              <div
+                style={{
+                  opacity: 0,
+                  animation: 'slideInUp 0.8s ease-out 0.2s both'
+                }}
+              >
+                <label htmlFor="email" className="block text-sm font-mono font-medium text-cyan-400 mb-2">
+                  <Terminal className="w-4 h-4 inline mr-2" />
+                  EMAIL *
                 </label>
                 <input
                   type="email"
@@ -119,14 +237,20 @@ const ContactSection = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                  className="w-full px-4 py-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300 text-white font-mono placeholder-gray-500 hover:border-gray-600"
                   placeholder="tu@email.com"
                 />
               </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Mensaje *
+              <div
+                style={{
+                  opacity: 0,
+                  animation: 'slideInUp 0.8s ease-out 0.3s both'
+                }}
+              >
+                <label htmlFor="message" className="block text-sm font-mono font-medium text-cyan-400 mb-2">
+                  <Mail className="w-4 h-4 inline mr-2" />
+                  MENSAJE *
                 </label>
                 <textarea
                   id="message"
@@ -135,22 +259,75 @@ const ContactSection = () => {
                   onChange={handleChange}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 resize-none"
-                  placeholder="Contame sobre tu proyecto, presupuesto estimado, timeline, etc."
+                  className="w-full px-4 py-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300 text-white font-mono placeholder-gray-500 resize-none hover:border-gray-600"
+                  placeholder="// Contame sobre tu proyecto, presupuesto, timeline, etc."
                 />
               </div>
 
               <button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="group relative w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 font-mono font-medium rounded-lg transition-all duration-300 flex items-center justify-center gap-3 border border-cyan-400/60 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-400/30 disabled:cursor-not-allowed overflow-hidden hover:scale-[1.02] hover:-translate-y-0.5"
+                style={{
+                  opacity: 0,
+                  animation: 'slideInUp 0.8s ease-out 0.4s both'
+                }}
               >
-                <Send className="w-4 h-4" />
-                Enviar Mensaje
+                {isSubmitting ? (
+                  <>
+                    <div
+                      className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"
+                    />
+                    <span>ENVIANDO...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>&gt;</span>
+                    <span>EJECUTAR_ENVIO()</span>
+                    <div className="group-hover:rotate-12 group-hover:translate-x-0.5 transition-transform duration-300">
+                      <Send className="w-5 h-5" />
+                    </div>
+                  </>
+                )}
               </button>
-            </form>
+            </div>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 0.3; }
+        }
+        
+        @keyframes scaleX {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+        
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 };
