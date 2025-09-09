@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Code, Zap, Globe, Smartphone, BarChart3 } from 'lucide-react';
+import { ExternalLink, Github, Code, Zap, Globe } from 'lucide-react';
 
 const ProjectsSection = () => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ShoppingCart, Bell, Terminal, Code2, Zap } from 'lucide-react';
+import { Menu, X, ShoppingCart, Bell, Terminal, Code2 } from 'lucide-react';
 import logoImage from '../../assets/logonewx.png';
 
 interface HeaderProps {

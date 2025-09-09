@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { Phone, Calendar, MapPin, Award, Briefcase, Zap, ExternalLink } from 'lucide-react';
+import { Calendar, MapPin, Award, Briefcase, Zap } from 'lucide-react';
 
 const ExperienceSection = () => {
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);

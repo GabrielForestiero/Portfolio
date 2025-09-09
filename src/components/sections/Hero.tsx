@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { ExternalLink, Download, ChevronDown, Code, Palette, Zap, Cpu, CircuitBoard, Github, Linkedin, Mail } from 'lucide-react';
+import { Download, ChevronDown, Code, Palette, Zap, Cpu, CircuitBoard, Github, Linkedin, Mail } from 'lucide-react';
 
 const HeroSection = () => {
   const [glitchText, setGlitchText] = useState('Gabriel Forestiero');

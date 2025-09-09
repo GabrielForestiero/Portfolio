@@ -1,7 +1,6 @@
 import Header from './components/layout/Header';
 import HeroSection from './components/sections/Hero';
 import AboutSection from './components/sections/About';
-import ProjectsSection from './components/sections/Projects';
 import ContactSection from './components/sections/Contact';
 import Footer from './components/layout/Footer';
 import Experience from './components/sections/Experience';
