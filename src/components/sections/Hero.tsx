@@ -25,7 +25,7 @@ const HeroSection = () => {
         setGlitchText(glitched);
         setTimeout(() => setGlitchText(originalText), 100);
       }
-    }, 4500); // Diferente timing para evitar conflictos
+    }, 4500);
 
     return () => clearInterval(glitchInterval);
   }, []);
@@ -34,7 +34,7 @@ const HeroSection = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWordIndex((prev) => (prev + 1) % words.length);
-    }, 2500); // Más rápido para mejor fluidez
+    }, 2500);
 
     return () => clearInterval(interval);
   }, []);
@@ -68,16 +68,16 @@ const HeroSection = () => {
       transition: { duration: 0.5 }
     },
     hover: {
-      scale: 1.1,
-      y: -8,
+      scale: 1.05,
+      y: -4,
       transition: { duration: 0.3 }
     }
   };
 
   const buttonVariants: Variants = {
     hover: {
-      scale: 1.05,
-      y: -4,
+      scale: 1.02,
+      y: -2,
       transition: { duration: 0.3 }
     },
     tap: { scale: 0.98 }
@@ -100,25 +100,25 @@ const HeroSection = () => {
       transition: { duration: 0.6, ease: "easeOut" }
     },
     hover: {
-      scale: 1.2,
-      y: -8,
+      scale: 1.1,
+      y: -4,
       transition: { duration: 0.3 }
     }
   };
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-black flex items-center justify-center px-4 sm:px-6 lg:px-8" style={{ height: 'calc(100vh - 80px)' }}>
+    <section className="min-h-screen relative overflow-hidden bg-black flex items-center justify-center px-3 sm:px-6 lg:px-8" style={{ height: 'calc(100vh - 80px)' }}>
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-gray-900 to-black"></div>
         
-        {/* Matrix rain */}
+        {/* Matrix rain - reducido en mobile */}
         <div className="absolute inset-0 overflow-hidden opacity-5">
-          {Array.from({ length: 20 }, (_, i) => (
+          {Array.from({ length: 15 }, (_, i) => (
             <motion.div
               key={i}
-              className="absolute text-green-400 font-mono text-xs whitespace-pre"
-              style={{ left: `${i * 5}%` }}
+              className="absolute text-green-400 font-mono text-xs whitespace-pre hidden sm:block"
+              style={{ left: `${i * 6}%` }}
               animate={{
                 y: ['0vh', '200vh']
               }}
@@ -134,10 +134,31 @@ const HeroSection = () => {
               ).join('\n')}
             </motion.div>
           ))}
+          {/* Matrix rain simplificado para mobile */}
+          {Array.from({ length: 6 }, (_, i) => (
+            <motion.div
+              key={`mobile-${i}`}
+              className="absolute text-green-400 font-mono text-xs whitespace-pre sm:hidden"
+              style={{ left: `${i * 16}%` }}
+              animate={{
+                y: ['0vh', '200vh']
+              }}
+              transition={{
+                duration: 20 + Math.random() * 10,
+                repeat: Infinity,
+                ease: "linear",
+                delay: Math.random() * 20
+              }}
+            >
+              {Array.from({ length: 30 }, () => 
+                String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))
+              ).join('\n')}
+            </motion.div>
+          ))}
         </div>
 
-        {/* Hexagonal connections */}
-        <div className="absolute inset-0 opacity-10">
+        {/* Hexagonal connections - oculto en mobile */}
+        <div className="absolute inset-0 opacity-10 hidden sm:block">
           <svg className="w-full h-full">
             {Array.from({ length: 8 }, (_, i) => (
               <motion.g
@@ -173,12 +194,32 @@ const HeroSection = () => {
           </svg>
         </div>
 
-        {/* Ripple waves */}
+        {/* Ripple waves - menos en mobile */}
         <div className="absolute inset-0 flex items-center justify-center">
-          {Array.from({ length: 4 }, (_, i) => (
+          {Array.from({ length: 2 }, (_, i) => (
             <motion.div
               key={i}
-              className="absolute border border-cyan-500/10 rounded-full"
+              className="absolute border border-cyan-500/10 rounded-full sm:hidden"
+              style={{
+                width: `${200 + i * 150}px`,
+                height: `${200 + i * 150}px`
+              }}
+              animate={{
+                scale: [0.8, 1.2],
+                opacity: [1, 0]
+              }}
+              transition={{
+                duration: 8 + i * 2,
+                repeat: Infinity,
+                delay: i * 2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+          {Array.from({ length: 4 }, (_, i) => (
+            <motion.div
+              key={`desktop-${i}`}
+              className="absolute border border-cyan-500/10 rounded-full hidden sm:block"
               style={{
                 width: `${300 + i * 200}px`,
                 height: `${300 + i * 200}px`
@@ -198,30 +239,30 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Corner decorations */}
+      {/* Corner decorations - más pequeñas en mobile */}
       <motion.div 
         className="absolute inset-0 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.5 }}
       >
-        <div className="absolute top-8 left-8 w-8 h-8 border-l-2 border-t-2 border-cyan-400/30" />
-        <div className="absolute top-8 right-8 w-8 h-8 border-r-2 border-t-2 border-cyan-400/30" />
-        <div className="absolute bottom-8 left-8 w-8 h-8 border-l-2 border-b-2 border-cyan-400/30" />
-        <div className="absolute bottom-8 right-8 w-8 h-8 border-r-2 border-b-2 border-cyan-400/30" />
+        <div className="absolute top-4 left-4 sm:top-8 sm:left-8 w-6 h-6 sm:w-8 sm:h-8 border-l-2 border-t-2 border-cyan-400/30" />
+        <div className="absolute top-4 right-4 sm:top-8 sm:right-8 w-6 h-6 sm:w-8 sm:h-8 border-r-2 border-t-2 border-cyan-400/30" />
+        <div className="absolute bottom-4 left-4 sm:bottom-8 sm:left-8 w-6 h-6 sm:w-8 sm:h-8 border-l-2 border-b-2 border-cyan-400/30" />
+        <div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 w-6 h-6 sm:w-8 sm:h-8 border-r-2 border-b-2 border-cyan-400/30" />
       </motion.div>
 
       {/* Main content */}
       <motion.div 
-        className="text-center max-w-5xl mx-auto relative z-10 py-8"
+        className="text-center max-w-5xl mx-auto relative z-10 py-4 sm:py-8"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Name with glitch */}
-        <motion.div className="mb-6" variants={itemVariants}>
+        {/* Name with glitch - tamaños más apropiados */}
+        <motion.div className="mb-4 sm:mb-6" variants={itemVariants}>
           <motion.h1 
-            className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-mono font-bold mb-4 relative"
+            className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-mono font-bold mb-3 sm:mb-4 relative leading-tight"
             variants={glitchVariants}
             animate={glitchText !== originalText ? "glitch" : "normal"}
           >
@@ -238,28 +279,28 @@ const HeroSection = () => {
           </motion.h1>
         </motion.div>
 
-        {/* Typewriter effect mejorado */}
+        {/* Typewriter effect - más compacto en mobile */}
         <motion.div 
-          className="mb-6 relative min-h-[4rem] flex items-center justify-center"
+          className="mb-4 sm:mb-6 relative min-h-[3rem] sm:min-h-[4rem] flex items-center justify-center"
           variants={itemVariants}
         >
-          <div className="flex items-center gap-6 mb-4">
+          <div className="flex items-center gap-4 sm:gap-6 mb-3 sm:mb-4">
             <motion.div 
-              className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent max-w-24"
+              className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent max-w-16 sm:max-w-24"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1, delay: 1 }}
             />
             <motion.div 
-              className="flex-1 h-px bg-gradient-to-l from-transparent via-cyan-400 to-transparent max-w-24"
+              className="flex-1 h-px bg-gradient-to-l from-transparent via-cyan-400 to-transparent max-w-16 sm:max-w-24"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1, delay: 1 }}
             />
           </div>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-mono font-semibold text-cyan-400 absolute">
-            <span className="text-purple-400 mr-3">&gt;</span>
-            <span className="inline-block min-w-[300px] text-left">
+          <h2 className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-mono font-semibold text-cyan-400 absolute">
+            <span className="text-purple-400 mr-2 sm:mr-3">&gt;</span>
+            <span className="inline-block min-w-[200px] xs:min-w-[250px] sm:min-w-[300px] text-left">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={words[currentWordIndex]}
@@ -289,9 +330,9 @@ const HeroSection = () => {
           </h2>
         </motion.div>
 
-        {/* Skills */}
+        {/* Skills - más compactas en mobile */}
         <motion.div 
-          className="flex flex-wrap justify-center gap-4 mb-6"
+          className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6 sm:mb-8"
           variants={itemVariants}
         >
           {[
@@ -303,7 +344,7 @@ const HeroSection = () => {
           ].map((skill, index) => (
             <motion.div
               key={skill.text}
-              className="group flex items-center gap-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700/60 px-5 py-3 rounded-xl cursor-pointer"
+              className="group flex items-center gap-2 sm:gap-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700/60 px-3 py-2 sm:px-5 sm:py-3 rounded-lg sm:rounded-xl cursor-pointer"
               variants={skillVariants}
               whileHover="hover"
               initial="hidden"
@@ -314,23 +355,23 @@ const HeroSection = () => {
                 whileHover={{ rotate: 12 }}
                 transition={{ duration: 0.3 }}
               >
-                <skill.icon className={`w-5 h-5 text-${skill.color}-400`} />
+                <skill.icon className={`w-4 h-4 sm:w-5 sm:h-5 text-${skill.color}-400`} />
               </motion.div>
-              <span className="text-sm font-mono text-gray-300 group-hover:text-white transition-colors font-medium">
+              <span className="text-xs sm:text-sm font-mono text-gray-300 group-hover:text-white transition-colors font-medium">
                 {skill.text}
               </span>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Buttons */}
+        {/* Buttons - ancho reducido */}
         <motion.div 
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
+          className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center items-center mb-6 sm:mb-8 max-w-sm sm:max-w-none mx-auto"
           variants={itemVariants}
         >
           <motion.a
             href="#contact"
-            className="group relative border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black px-8 py-4 font-mono font-medium overflow-hidden rounded-lg"
+            className="w-full sm:w-auto group relative border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black px-8 py-3 sm:px-8 sm:py-4 font-mono font-medium overflow-hidden rounded-lg"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
@@ -342,13 +383,13 @@ const HeroSection = () => {
               transition={{ duration: 0.5 }}
               style={{ originX: 0 }}
             />
-            <span className="relative z-10 text-lg">CONTACTO</span>
+            <span className="relative z-10 text-base sm:text-lg">CONTACTO</span>
           </motion.a>
 
           <motion.a
             href="/CV-Gabriel-Forestiero-Frontend-2025..pdf"
             download="Gabriel_Forestiero_CV.pdf" 
-            className="group relative bg-gray-800/70 border-2 border-gray-600/70 hover:border-purple-400/70 text-gray-300 hover:text-purple-300 font-mono px-8 py-4 rounded-lg backdrop-blur-sm hover:bg-gray-700/70 transition-all duration-300 flex items-center gap-3"
+            className="w-full sm:w-auto group relative bg-gray-800/70 border-2 border-gray-600/70 hover:border-purple-400/70 text-gray-300 hover:text-purple-300 font-mono px-8 py-3 sm:px-8 sm:py-4 rounded-lg backdrop-blur-sm hover:bg-gray-700/70 transition-all duration-300 flex items-center justify-center gap-3"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
@@ -357,15 +398,15 @@ const HeroSection = () => {
               whileHover={{ rotate: 12, scale: 1.1 }}
               transition={{ duration: 0.3 }}
             >
-              <Download className="w-5 h-5" />
+              <Download className="w-4 h-4 sm:w-5 sm:h-5" />
             </motion.div>
-            <span className="relative z-10 text-lg font-medium">DESCARGAR CV</span>
+            <span className="relative z-10 text-base sm:text-lg font-medium">DESCARGAR CV</span>
           </motion.a>
         </motion.div>
 
-        {/* Social Icons */}
+        {/* Social Icons - más compactos en mobile */}
         <motion.div 
-          className="flex justify-center gap-6 mb-8"
+          className="flex justify-center gap-4 sm:gap-6 mb-6 sm:mb-8"
           variants={itemVariants}
         >
           {[
@@ -396,7 +437,7 @@ const HeroSection = () => {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`group relative p-4 rounded-xl border border-gray-700/60 backdrop-blur-sm transition-all duration-300 ${social.bgColor}`}
+              className={`group relative p-3 sm:p-4 rounded-xl border border-gray-700/60 backdrop-blur-sm transition-all duration-300 ${social.bgColor}`}
               variants={socialVariants}
               whileHover="hover"
               initial="hidden"
@@ -407,11 +448,11 @@ const HeroSection = () => {
                 whileHover={{ rotate: 12 }}
                 transition={{ duration: 0.3 }}
               >
-                <social.icon className={`w-6 h-6 transition-colors duration-300 ${social.color}`} />
+                <social.icon className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors duration-300 ${social.color}`} />
               </motion.div>
               
-              {/* Tooltip */}
-              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-sm px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none font-mono">
+              {/* Tooltip - oculto en mobile */}
+              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-sm px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none font-mono hidden sm:block">
                 {social.label}
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45" />
               </div>
@@ -425,10 +466,10 @@ const HeroSection = () => {
           variants={itemVariants}
         >
           <motion.div
-            animate={{ y: [0, -8, 0] }}
+            animate={{ y: [0, -6, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <ChevronDown className="w-6 h-6 text-cyan-400/70" />
+            <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400/70" />
           </motion.div>
         </motion.div>
       </motion.div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ShoppingCart, Bell, Terminal, Code2, Zap } from 'lucide-react';
-import logoImage from '../../assets/logo_embed.svg';
+import logoImage from '../../assets/logonewx.png';
 
 interface HeaderProps {
   logo?: string;
@@ -62,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center space-x-4">
               <div className="flex items-center group cursor-pointer">
                 {logo ? (
-                  <img src={logo} alt={title} className="h-25 w-auto" />
+                  <img src={logo} alt={title} className="h-32 w-auto" />
                 ) : (
                   <div className="relative">
                     <div className="h-10 w-10 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg flex items-center justify-center border border-cyan-400/50 shadow-lg shadow-cyan-400/30">
@@ -75,9 +75,8 @@ const Header: React.FC<HeaderProps> = ({
                   <span className={`text-xl font-mono font-bold text-white hidden sm:block transition-all duration-200 ${
                     glitchActive ? 'animate-pulse text-cyan-400' : ''
                   }`}>
-                   
+                    {title}
                   </span>
-                 
                 </div>
               </div>
             </div>
@@ -145,48 +144,58 @@ const Header: React.FC<HeaderProps> = ({
         </div>
       </header>
 
-      {/* Menú mobile */}
-      <div className={`md:hidden fixed inset-x-0 top-20 z-40 transform transition-all duration-300 ease-in-out ${
+      {/* Menú mobile - Integrado con el header */}
+      <div className={`md:hidden fixed left-0 right-0 top-20 z-40 transform transition-all duration-300 ease-in-out ${
         isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
       }`}>
-        <div className="bg-indigo-950/90 backdrop-blur-xl border border-indigo-700/30 mx-4 rounded-2xl shadow-2xl overflow-hidden">
-          <div className="relative z-10 px-6 py-4 space-y-2">
-            {/* Header del menú */}
-            <div className="flex items-center justify-center mb-6 pb-4 border-b border-cyan-400/20">
-              <Zap className="w-4 h-4 text-cyan-400 mr-2" />
-              <span className="font-mono text-sm text-cyan-400">NAVIGATION.menu</span>
-              <Zap className="w-4 h-4 text-cyan-400 ml-2" />
-            </div>
-
+        {/* Extensión del header sin separación */}
+        <div className="bg-gradient-to-b from-gray-900/95 via-slate-900/95 to-black/95 backdrop-blur-xl border-b border-cyan-400/20 shadow-xl">
+          {/* Línea de conexión superior */}
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent"></div>
+          
+          <div className="px-4 sm:px-6 lg:px-8 py-4">
             {/* Items del menú mobile */}
-            {menuItems.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                onClick={(e) => {
-                  if (item.onClick) {
-                    e.preventDefault();
-                    item.onClick();
-                  }
-                  setIsMenuOpen(false);
-                }}
-                className="group items-center gap-3 text-gray-300 hover:text-cyan-400 hover:bg-cyan-400/10 block px-4 py-3 rounded-lg font-mono text-base font-medium transition-all duration-300 border border-transparent hover:border-cyan-400/30 backdrop-blur-sm"
-              >
-                <Code2 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
-                <span className="flex-1">{item.label}</span>
-                <span className="text-xs text-cyan-400/60 group-hover:text-cyan-400">→</span>
-              </a>
-            ))}
+            <div className="space-y-1">
+              {menuItems.map((item, index) => (
+                <div
+                  key={index}
+                  className={`transform transition-all duration-300 ${
+                    isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                  }`}
+                  style={{ transitionDelay: `${index * 0.1}s` }}
+                >
+                  <a
+                    href={item.href}
+                    onClick={(e) => {
+                      if (item.onClick) {
+                        e.preventDefault();
+                        item.onClick();
+                      }
+                      setIsMenuOpen(false);
+                    }}
+                    className="group flex items-center gap-3 text-blue-200 hover:text-cyan-400 hover:bg-cyan-400/5 px-4 py-3 rounded-lg font-mono text-base font-medium transition-all duration-300 border border-transparent hover:border-cyan-400/30 backdrop-blur-sm"
+                  >
+                    <Code2 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
+                    <span className="flex-1">{item.label}</span>
+                    <span className="text-xs text-cyan-400/60 group-hover:text-cyan-400 transition-colors duration-300">→</span>
+                  </a>
+                </div>
+              ))}
+            </div>
           </div>
+
+          {/* Línea inferior */}
+          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"></div>
         </div>
 
         {/* Overlay */}
         <div 
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm -z-10"
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm -z-10 transition-opacity duration-300"
           onClick={() => setIsMenuOpen(false)}
         />
       </div>
 
+      {/* Estilos adicionales */}
       <style>{`
         @keyframes glitch {
           0%, 100% { transform: translateX(0); }
@@ -194,6 +203,11 @@ const Header: React.FC<HeaderProps> = ({
           40% { transform: translateX(2px); }
           60% { transform: translateX(-1px); }
           80% { transform: translateX(1px); }
+        }
+        
+        @keyframes matrix-fall {
+          0% { transform: translateY(-100vh); opacity: 1; }
+          100% { transform: translateY(100vh); opacity: 0; }
         }
       `}</style>
     </>

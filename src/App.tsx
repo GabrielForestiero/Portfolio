@@ -5,6 +5,7 @@ import ProjectsSection from './components/sections/Projects';
 import ContactSection from './components/sections/Contact';
 import Footer from './components/layout/Footer';
 import Experience from './components/sections/Experience';
+import SkillsSection from './components/sections/Skills';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <HeroSection />
         <AboutSection />
         <Experience></Experience>
+        <SkillsSection />
         {/* <ProjectsSection /> */}
         <ContactSection />
       </main>

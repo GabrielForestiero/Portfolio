@@ -1,45 +1,25 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { Users, Code, ChevronRight, Target, ExternalLink, Phone, Calendar, MapPin, Award, Briefcase, Zap } from 'lucide-react';
+import { useState } from 'react';
+import { motion, type Variants } from 'framer-motion';
+import { Phone, Calendar, MapPin, Award, Briefcase, Zap, ExternalLink } from 'lucide-react';
 
 const ExperienceSection = () => {
-  const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
 
   const experiences = [
     {
       id: 1,
-      title: 'Desarrollador Frontend SSR',
+      title: 'Desarrollador FrontEnd',
       company: 'Oppers',
       period: 'Oct. 2024 - Presente',
       location: 'Buenos Aires, Argentina',
       type: 'Especialización Frontend',
       status: 'current',
       description: 'Me especialicé en desarrollo Front-End con React y TypeScript, entregando código escalable y mantenible. Diseñé e implementé sistemas de componentes modulares que estandarizaron patrones de UI en toda la organización. Optimicé el rendimiento mediante la gestión eficiente de estado y estrategias de renderizado de componentes.',
-      keyAchievements: [
-        'Especialización completa en desarrollo Front-End con React y TypeScript',
-        'Sistemas de componentes modulares para estandarización de UI',
-        'Optimización de rendimiento y gestión eficiente de estado'
-      ],
-      technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Component Libraries'],
-      references: [
-        {
-          name: 'Nicolás Andrés Hoffmann',
-          role: 'CTO en Oppers',
-          phone: '+54 9 11 6501-4422',
-          linkedin: 'https://www.linkedin.com/in/nicoahoffmann/'
-        },
-        {
-          name: 'Lucas Amado Córdoba',
-          role: 'Technical Leader en Oppers',
-          phone: '+54 9 11 3399 7178',
-          linkedin: 'https://www.linkedin.com/in/lucas-amado-cordoba/'
-        }
-      ]
+      technologies: ['React', 'TypeScript','Styled Components'],
     },
     {
       id: 2,
-      title: 'Desarrollador Full Stack',
+      title: 'Desarrollador FullStack',
       company: 'Grava Digital',
       period: 'Ago. 2021 - Sep. 2024',
       location: 'Buenos Aires, Argentina',
@@ -51,14 +31,10 @@ const ExperienceSection = () => {
         'Liderazgo de equipo de desarrollo y mentoring de developers junior',
         'Implementación de metodología Scrum y optimización de entregas'
       ],
-      technologies: ['React', 'Next.js', 'Angular', 'Node.js', 'Express', 'MongoDB', 'MySQL', 'PostgreSQL', 'Scrum'],
+      technologies: ['React', 'Next.js', 'Angular', 'Node.js', 'Express', 'MongoDB', 'MySQL', 'PostgreSQL'],
       references: []
     }
   ];
-
-  const toggleExpand = (cardId: number) => {
-    setExpandedCard(expandedCard === cardId ? null : cardId);
-  };
 
   // Animation variants
   const containerVariants: Variants = {
@@ -153,10 +129,10 @@ const ExperienceSection = () => {
                   stroke="#00ffff"
                   strokeWidth="0.5"
                   fill="none"
-                  transform={`translate(${(i * 200) % window.innerWidth}, ${Math.floor(i / 5) * 250 + 100})`}
+                  transform={`translate(${(i * 200) % (typeof window !== 'undefined' ? window.innerWidth : 1200)}, ${Math.floor(i / 5) * 250 + 100})`}
                 />
                 <motion.circle
-                  cx={50 + (i * 200) % window.innerWidth}
+                  cx={50 + (i * 200) % (typeof window !== 'undefined' ? window.innerWidth : 1200)}
                   cy={50 + Math.floor(i / 5) * 250 + 100}
                   r="1.5"
                   fill="#00ffff"
@@ -207,10 +183,7 @@ const ExperienceSection = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.5 }}
       >
-        <div className="absolute top-8 left-8 w-12 h-12 border-l-2 border-t-2 border-cyan-400/40" />
-        <div className="absolute top-8 right-8 w-12 h-12 border-r-2 border-t-2 border-cyan-400/40" />
-        <div className="absolute bottom-8 left-8 w-12 h-12 border-l-2 border-b-2 border-cyan-400/40" />
-        <div className="absolute bottom-8 right-8 w-12 h-12 border-r-2 border-b-2 border-cyan-400/40" />
+       
       </motion.div>
 
       <motion.div
@@ -221,11 +194,10 @@ const ExperienceSection = () => {
       >
         {/* Enhanced Header */}
         <motion.div className="mb-20 text-center" variants={itemVariants}>
-
-
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-mono font-bold text-white mb-6">
             <span className="text-purple-400 mr-2">&gt;</span>
-            Experiencia
+            <span className="text-cyan-400"> EXPERIENCIA</span>
+            
             <motion.span
               className="text-cyan-400 ml-2"
               animate={{ opacity: [1, 0, 1] }}
@@ -234,18 +206,32 @@ const ExperienceSection = () => {
               █
             </motion.span>
           </h2>
+           <div className="flex items-center justify-center gap-6 mb-6">
+            <motion.div
+              className="flex-1 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent max-w-32"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            />
+            <motion.div
+              className="flex-1 h-px bg-gradient-to-l from-transparent via-purple-400 to-transparent max-w-32"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            />
+          </div>
 
           <p className="text-xl text-gray-400 font-mono max-w-2xl mx-auto">
             Mi trayectoria profesional construyendo experiencias digitales
           </p>
         </motion.div>
 
-        {/* Enhanced Timeline */}
+        {/* Timeline Responsive */}
         <div className="relative">
-          {/* Timeline line with gradient */}
-          <div className="absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-purple-500 to-cyan-400 rounded-full opacity-30"></div>
+          {/* Timeline line - centrada en mobile, lateral en desktop */}
+          <div className="absolute left-1/2 sm:left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-purple-500 to-cyan-400 rounded-full opacity-30 transform -translate-x-1/2 sm:translate-x-0"></div>
 
-          <div className="space-y-16">
+          <div className="space-y-12 sm:space-y-16">
             {experiences.map((exp, index) => (
               <motion.div
                 key={exp.id}
@@ -253,9 +239,9 @@ const ExperienceSection = () => {
                 variants={itemVariants}
                 custom={index}
               >
-                {/* Enhanced Timeline dot */}
+                {/* Timeline dot - centrado en mobile, lateral en desktop */}
                 <motion.div
-                  className="absolute left-3 w-6 h-6 rounded-full border-4 border-gray-900 z-10 flex items-center justify-center"
+                  className="absolute left-1/2 sm:left-3 w-6 h-6 rounded-full border-4 border-gray-900 z-10 flex items-center justify-center transform -translate-x-1/2 sm:translate-x-0"
                   style={{
                     background: exp.status === 'current'
                       ? 'linear-gradient(135deg, #10b981, #06d6a0)'
@@ -286,38 +272,37 @@ const ExperienceSection = () => {
                   )}
                 </motion.div>
 
-                {/* Enhanced Content Card */}
-                <div className="ml-16">
+                {/* Content Card - centrado en mobile con margen, lateral en desktop */}
+                <div className="pt-8 sm:pt-0 sm:ml-16">
                   <motion.div
-                    className="group cursor-pointer relative"
+                    className="group relative"
                     variants={cardVariants}
                     whileHover="hover"
-                    onClick={() => toggleExpand(exp.id)}
                   >
                     {/* Glass card effect */}
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-xl border border-gray-700/50 rounded-2xl group-hover:border-cyan-400/50 transition-all duration-500" />
 
                     {/* Card content */}
-                    <div className="relative p-8">
+                    <div className="relative p-6 sm:p-8">
                       {/* Header */}
                       <div className="mb-6">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex-1">
-                            <h3 className="text-2xl font-mono font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-4">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-xl sm:text-2xl font-mono font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300 break-words text-center sm:text-left">
                               {exp.title}
                             </h3>
-                            <div className="flex flex-wrap items-center gap-4 mb-3">
+                            <div className="flex flex-col items-center sm:items-start sm:flex-row sm:flex-wrap gap-2 sm:gap-4 mb-3">
                               <div className="flex items-center gap-2">
-                                <Briefcase className="w-4 h-4 text-cyan-400" />
-                                <span className="text-cyan-400 font-semibold font-mono">{exp.company}</span>
+                                <Briefcase className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+                                <span className="text-cyan-400 font-semibold font-mono text-sm sm:text-base">{exp.company}</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <Calendar className="w-4 h-4 text-gray-400" />
-                                <span className="text-gray-400 text-sm font-mono">{exp.period}</span>
+                                <Calendar className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                                <span className="text-gray-400 text-xs sm:text-sm font-mono">{exp.period}</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <MapPin className="w-4 h-4 text-gray-400" />
-                                <span className="text-gray-400 text-sm font-mono">{exp.location}</span>
+                                <MapPin className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                                <span className="text-gray-400 text-xs sm:text-sm font-mono">{exp.location}</span>
                               </div>
                             </div>
                           </div>
@@ -325,7 +310,7 @@ const ExperienceSection = () => {
                           {/* Status badge */}
                           {exp.status === 'current' && (
                             <motion.div
-                              className="bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-400 px-4 py-2 rounded-xl text-xs font-mono font-bold border border-emerald-500/30 backdrop-blur-sm"
+                              className="bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-400 px-3 py-1 sm:px-4 sm:py-2 rounded-xl text-xs font-mono font-bold border border-emerald-500/30 backdrop-blur-sm flex-shrink-0 self-center sm:self-start"
                               animate={{
                                 boxShadow: [
                                   '0 0 0 rgba(16, 185, 129, 0)',
@@ -343,189 +328,45 @@ const ExperienceSection = () => {
 
                       {/* Description */}
                       <div className="mb-6">
-                        <p className="text-gray-300 leading-relaxed font-mono text-sm">
+                        <p className="text-gray-300 leading-relaxed font-mono text-sm text-center sm:text-left">
                           {exp.description}
                         </p>
                       </div>
 
-                      {/* Technologies preview */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {exp.technologies.slice(0, 4).map((tech, idx) => (
-                          <motion.span
-                            key={idx}
-                            className="px-3 py-1 bg-gradient-to-r from-gray-800/80 to-gray-700/80 text-gray-300 text-xs rounded-full border border-gray-600/50 font-mono backdrop-blur-sm"
-                            whileHover={{
-                              scale: 1.05,
-                              backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                              borderColor: 'rgba(16, 185, 129, 0.3)',
-                              color: '#10b981'
-                            }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            {tech}
-                          </motion.span>
-                        ))}
-                        {exp.technologies.length > 4 && (
-                          <span className="px-3 py-1 text-cyan-400 text-xs rounded-full font-mono">
-                            +{exp.technologies.length - 4} más
-                          </span>
-                        )}
+                      {/* Technologies */}
+                      <div className="mb-6">
+                        <h4 className="text-white font-bold mb-3 font-mono text-sm sm:text-base text-center sm:text-left">
+                          Stack Tecnológico:
+                        </h4>
+                        <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">
+                          {exp.technologies.map((tech, idx) => (
+                            <motion.span
+                              key={idx}
+                              className="px-3 py-1 sm:px-4 sm:py-2 bg-gradient-to-r from-gray-800/80 to-gray-700/80 text-gray-300 text-xs sm:text-sm rounded-lg border border-gray-600/50 font-mono backdrop-blur-sm cursor-pointer"
+                              variants={techVariants}
+                              initial="hidden"
+                              animate="visible"
+                              whileHover="hover"
+                              transition={{ delay: idx * 0.05 }}
+                              onHoverStart={() => setHoveredTech(tech)}
+                              onHoverEnd={() => setHoveredTech(null)}
+                              style={{
+                                background: hoveredTech === tech
+                                  ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(139, 92, 246, 0.2))'
+                                  : undefined,
+                                borderColor: hoveredTech === tech
+                                  ? 'rgba(16, 185, 129, 0.5)'
+                                  : undefined,
+                                color: hoveredTech === tech
+                                  ? '#10b981'
+                                  : undefined
+                              }}
+                            >
+                              {tech}
+                            </motion.span>
+                          ))}
+                        </div>
                       </div>
-
-                      {/* Expand button */}
-                      <motion.button
-                        className="flex items-center gap-3 text-cyan-400 hover:text-cyan-300 font-mono font-medium transition-colors group/btn"
-                        whileHover={{ x: 8 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <span className="text-sm">
-                          {expandedCard === exp.id ? 'Ocultar detalles' : 'Ver detalles completos'}
-                        </span>
-                        <motion.div
-                          animate={{ rotate: expandedCard === exp.id ? 90 : 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <ChevronRight className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
-                        </motion.div>
-                      </motion.button>
-
-                      {/* Expandable content */}
-                      <AnimatePresence>
-                        {expandedCard === exp.id && (
-                          <motion.div
-                            className="mt-8 space-y-8"
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.5, ease: "easeInOut" }}
-                          >
-                            {/* Separator */}
-                            <div className="h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
-
-                            {/* Key Achievements */}
-                            <motion.div
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.1 }}
-                            >
-                              <h4 className="text-white font-bold mb-4 flex items-center gap-3 font-mono">
-                                <Target className="w-5 h-5 text-cyan-400" />
-                                Logros Principales
-                              </h4>
-                              <div className="grid gap-3">
-                                {exp.keyAchievements.map((achievement, idx) => (
-                                  <motion.div
-                                    key={idx}
-                                    className="flex items-start gap-3 text-gray-300 text-sm group/achievement"
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: idx * 0.1 + 0.2 }}
-                                  >
-                                    <motion.div
-                                      className="w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"
-                                      whileHover={{ scale: 1.5 }}
-                                    />
-                                    <span className="font-mono leading-relaxed group-hover/achievement:text-white transition-colors">
-                                      {achievement}
-                                    </span>
-                                  </motion.div>
-                                ))}
-                              </div>
-                            </motion.div>
-
-                            {/* Technologies */}
-                            <motion.div
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.2 }}
-                            >
-                              <h4 className="text-white font-bold mb-4 flex items-center gap-3 font-mono">
-                                <Code className="w-5 h-5 text-cyan-400" />
-                                Stack Tecnológico
-                              </h4>
-                              <div className="flex flex-wrap gap-3">
-                                {exp.technologies.map((tech, idx) => (
-                                  <motion.span
-                                    key={idx}
-                                    className="px-4 py-2 bg-gradient-to-r from-gray-800/80 to-gray-700/80 text-gray-300 text-sm rounded-lg border border-gray-600/50 font-mono backdrop-blur-sm cursor-pointer"
-                                    variants={techVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    whileHover="hover"
-                                    transition={{ delay: idx * 0.05 }}
-                                    onHoverStart={() => setHoveredTech(tech)}
-                                    onHoverEnd={() => setHoveredTech(null)}
-                                    style={{
-                                      background: hoveredTech === tech
-                                        ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(139, 92, 246, 0.2))'
-                                        : undefined,
-                                      borderColor: hoveredTech === tech
-                                        ? 'rgba(16, 185, 129, 0.5)'
-                                        : undefined,
-                                      color: hoveredTech === tech
-                                        ? '#10b981'
-                                        : undefined
-                                    }}
-                                  >
-                                    {tech}
-                                  </motion.span>
-                                ))}
-                              </div>
-                            </motion.div>
-
-                            {/* References */}
-                            {exp.references.length > 0 && (
-                              <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3 }}
-                              >
-                                <h4 className="text-white font-bold mb-4 flex items-center gap-3 font-mono">
-                                  <Users className="w-5 h-5 text-cyan-400" />
-                                  Referencias Profesionales
-                                </h4>
-                                <div className="grid sm:grid-cols-2 gap-4">
-                                  {exp.references.map((ref, idx) => (
-                                    <motion.div
-                                      key={idx}
-                                      className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 border border-gray-700/50 rounded-xl p-6 backdrop-blur-sm hover:border-cyan-400/30 transition-all duration-300"
-                                      initial={{ opacity: 0, y: 20 }}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      transition={{ delay: idx * 0.1 + 0.4 }}
-                                      whileHover={{ y: -4, scale: 1.02 }}
-                                    >
-                                      <div className="mb-4">
-                                        <p className="text-white font-bold font-mono text-lg mb-1">{ref.name}</p>
-                                        <p className="text-gray-400 text-sm font-mono">{ref.role}</p>
-                                      </div>
-                                      <div className="flex flex-col gap-3">
-                                        <motion.a
-                                          href={`tel:${ref.phone}`}
-                                          className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 text-sm font-mono transition-colors"
-                                          whileHover={{ x: 4 }}
-                                        >
-                                          <Phone className="w-4 h-4" />
-                                          {ref.phone}
-                                        </motion.a>
-                                        <motion.a
-                                          href={ref.linkedin}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-mono transition-colors"
-                                          whileHover={{ x: 4 }}
-                                        >
-                                          <ExternalLink className="w-4 h-4" />
-                                          LinkedIn Profile
-                                        </motion.a>
-                                      </div>
-                                    </motion.div>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            )}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
                     </div>
                   </motion.div>
                 </div>
@@ -533,9 +374,6 @@ const ExperienceSection = () => {
             ))}
           </div>
         </div>
-
-        {/* Call to action */}
-       
       </motion.div>
     </section>
   );

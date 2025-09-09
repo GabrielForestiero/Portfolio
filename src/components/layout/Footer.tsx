@@ -170,15 +170,7 @@ const Footer = ({
       </div>
 
       {/* Corner decorations similar al Hero */}
-      <motion.div 
-        className="absolute inset-0 pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-      >
-        <div className="absolute bottom-4 left-4 w-6 h-6 border-l border-b border-cyan-400/20" />
-        <div className="absolute bottom-4 right-4 w-6 h-6 border-r border-b border-cyan-400/20" />
-      </motion.div>
+    
     </footer>
   );
 };
