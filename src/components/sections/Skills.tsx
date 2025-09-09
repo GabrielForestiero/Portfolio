@@ -1,11 +1,15 @@
 import { motion, easeOut } from 'framer-motion';
+import { useState, type SetStateAction } from 'react';
 import { 
   Code, Database, Globe, Server, Terminal, 
   Palette, Layers, GitBranch, Shield, Zap,
-  Settings, Box, FileText, Wrench, Cloud
+  Settings, Box, FileText, Wrench, Cloud,
+  ChevronLeft, ChevronRight
 } from 'lucide-react';
 
 const SkillsSection = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
   const skillCategories = [
     {
       category: 'Frontend',
@@ -110,6 +114,22 @@ const SkillsSection = () => {
     }
   };
 
+  const nextSlide = () => {
+    setCurrentSlide((prev) => 
+      prev === skillCategories.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => 
+      prev === 0 ? skillCategories.length - 1 : prev - 1
+    );
+  };
+
+  const goToSlide = (index: SetStateAction<number>) => {
+    setCurrentSlide(index);
+  };
+
   return (
     <section id="skills" className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background con efectos cyberpunk */}
@@ -196,75 +216,177 @@ const SkillsSection = () => {
               transition={{ duration: 1, delay: 0.5 }}
             />
           </div>
-
-       
         </motion.div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Desktop Grid */}
+        <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skillCategories.map((category, categoryIndex) => (
-            <motion.div
-              key={categoryIndex}
-              className={`group relative bg-gray-900/50 backdrop-blur-sm border ${category.borderColor} rounded-lg p-6 hover:bg-gray-800/50 transition-all duration-300 hover:shadow-lg hover:shadow-${category.color}-400/20`}
-              variants={itemVariants}
-              whileHover={{ scale: 1.02, y: -5 }}
-            >
-              {/* Category Header */}
-              <div className="flex items-center gap-3 mb-6">
-                <motion.div
-                  className={`w-12 h-12 ${category.bgColor} border ${category.borderColor} rounded-lg flex items-center justify-center ${category.iconColor}`}
-                  whileHover={{ rotate: 12, scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <category.icon className="w-6 h-6" />
-                </motion.div>
-                <div>
-                  <h3 className={`text-lg font-mono font-semibold text-white group-hover:${category.iconColor} transition-colors`}>
-                    {category.category}
-                  </h3>
-                
-                </div>
-              </div>
-
-              {/* Skills List */}
-              <div className="grid grid-cols-1 gap-3">
-                {category.skills.map((skill, skillIndex) => (
-                  <motion.div
-                    key={skillIndex}
-                    className={`group/skill flex items-center gap-3 p-3 ${category.bgColor} border ${category.borderColor} rounded-lg hover:bg-opacity-20 transition-all duration-300`}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: categoryIndex * 0.1 + skillIndex * 0.05 }}
-                    whileHover={{ scale: 1.02, x: 5 }}
-                  >
-                    <span className="text-white font-mono text-sm font-medium flex-grow">
-                      {skill.name}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Status indicator */}
-              <motion.div
-                className="absolute top-3 right-3 w-2 h-2 bg-green-400 rounded-full"
-                animate={{
-                  opacity: [0.5, 1, 0.5],
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: categoryIndex * 0.3
-                }}
-              />
-            </motion.div>
+            <SkillCard 
+              key={categoryIndex} 
+              category={category} 
+              categoryIndex={categoryIndex} 
+              itemVariants={itemVariants} 
+            />
           ))}
         </div>
 
-        {/* Terminal-style footer */}
-      
+        {/* Mobile/Tablet Carousel */}
+        <div className="lg:hidden relative">
+          {/* Carousel Container */}
+          <div className="relative overflow-hidden rounded-xl">
+            <motion.div 
+              className="flex transition-transform duration-300 ease-out"
+              style={{ 
+                transform: `translateX(-${currentSlide * 100}%)` 
+              }}
+            >
+              {skillCategories.map((category, categoryIndex) => (
+                <div key={categoryIndex} className="w-full flex-shrink-0 px-2">
+                  <SkillCard 
+                    category={category} 
+                    categoryIndex={categoryIndex} 
+                    itemVariants={itemVariants} 
+                  />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-between items-center mt-6">
+            <motion.button
+              onClick={prevSlide}
+              className="flex items-center justify-center w-12 h-12 bg-gray-800/50 backdrop-blur-sm border border-purple-400/30 rounded-lg text-purple-400 hover:bg-purple-400/10 transition-all duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </motion.button>
+
+            {/* Dots Indicator */}
+            <div className="flex gap-2">
+              {skillCategories.map((_, index) => (
+                <motion.button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === index 
+                      ? 'bg-purple-400 shadow-lg shadow-purple-400/50' 
+                      : 'bg-gray-600 hover:bg-gray-500'
+                  }`}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                />
+              ))}
+            </div>
+
+            <motion.button
+              onClick={nextSlide}
+              className="flex items-center justify-center w-12 h-12 bg-gray-800/50 backdrop-blur-sm border border-purple-400/30 rounded-lg text-purple-400 hover:bg-purple-400/10 transition-all duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronRight className="w-6 h-6" />
+            </motion.button>
+          </div>
+
+          {/* Category Counter */}
+          <div className="text-center mt-4">
+            <span className="text-gray-400 font-mono text-sm">
+              {currentSlide + 1} / {skillCategories.length}
+            </span>
+          </div>
+
+          {/* Swipe Indicator */}
+          <motion.div 
+            className="text-center mt-2"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: [1, 0.5, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <span className="text-gray-500 font-mono text-xs">
+              ← Desliza para ver más →
+            </span>
+          </motion.div>
+        </div>
       </motion.div>
     </section>
+  );
+};
+
+// Componente SkillCard extraído para reutilización
+type Skill = { name: string; level: number };
+type SkillCategory = {
+  category: string;
+  icon: React.ElementType;
+  color: string;
+  bgColor: string;
+  borderColor: string;
+  iconColor: string;
+  skills: Skill[];
+};
+
+interface SkillCardProps {
+  category: SkillCategory;
+  categoryIndex: number;
+  itemVariants: any;
+}
+
+const SkillCard: React.FC<SkillCardProps> = ({ category, categoryIndex, itemVariants }) => {
+  return (
+    <motion.div
+      className={`group relative bg-gray-900/50 backdrop-blur-sm border ${category.borderColor} rounded-lg p-6 hover:bg-gray-800/50 transition-all duration-300 hover:shadow-lg hover:shadow-${category.color}-400/20 min-h-[320px]`}
+      variants={itemVariants}
+      whileHover={{ scale: 1.02, y: -5 }}
+    >
+      {/* Category Header */}
+      <div className="flex items-center gap-3 mb-6">
+        <motion.div
+          className={`w-12 h-12 ${category.bgColor} border ${category.borderColor} rounded-lg flex items-center justify-center ${category.iconColor}`}
+          whileHover={{ rotate: 12, scale: 1.1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <category.icon className="w-6 h-6" />
+        </motion.div>
+        <div>
+          <h3 className={`text-lg font-mono font-semibold text-white group-hover:${category.iconColor} transition-colors`}>
+            {category.category}
+          </h3>
+        </div>
+      </div>
+
+      {/* Skills List */}
+      <div className="grid grid-cols-1 gap-3">
+        {category.skills.map((skill, skillIndex) => (
+          <motion.div
+            key={skillIndex}
+            className={`group/skill flex items-center gap-3 p-3 ${category.bgColor} border ${category.borderColor} rounded-lg hover:bg-opacity-20 transition-all duration-300`}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: categoryIndex * 0.1 + skillIndex * 0.05 }}
+            whileHover={{ scale: 1.02, x: 5 }}
+          >
+            <span className="text-white font-mono text-sm font-medium flex-grow">
+              {skill.name}
+            </span>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Status indicator */}
+      <motion.div
+        className="absolute top-3 right-3 w-2 h-2 bg-green-400 rounded-full"
+        animate={{
+          opacity: [0.5, 1, 0.5],
+          scale: [1, 1.2, 1]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          delay: categoryIndex * 0.3
+        }}
+      />
+    </motion.div>
   );
 };
 
