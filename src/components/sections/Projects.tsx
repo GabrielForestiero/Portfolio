@@ -12,8 +12,8 @@ const ProjectsSection = () => {
       description: "Plataforma completa de comercio electrónico con carrito de compras, pagos integrados y panel administrativo.",
       image: "",
       techs: ["React", "Node.js", "MongoDB", "Stripe"],
-      demoLink: "#",
-      codeLink: "#",
+      demoLink: "https://funtasticdepot.com/",
+      
       icon: Globe,
       status: "DEPLOYED",
       lines: "~15,000"
@@ -29,28 +29,7 @@ const ProjectsSection = () => {
       status: "BETA",
       lines: "~8,500"
     },
-    {
-      title: "Weather Dashboard",
-      description: "Dashboard interactivo del clima con gráficos en tiempo real y pronóstico extendido para múltiples ciudades.",
-      image: "",
-      techs: ["React", "Chart.js", "Weather API", "Tailwind"],
-      demoLink: "#",
-      codeLink: "#",
-      icon: BarChart3,
-      status: "LIVE",
-      lines: "~6,200"
-    },
-    {
-      title: "Social Media App",
-      description: "Red social minimalista con posts, likes, comentarios y sistema de seguimiento entre usuarios.",
-      image: "",
-      techs: ["React Native", "Firebase", "Redux", "Expo"],
-      demoLink: "#",
-      codeLink: "#",
-      icon: Smartphone,
-      status: "DEV",
-      lines: "~12,300"
-    }
+    
   ];
 
   // Glitch effect for project titles

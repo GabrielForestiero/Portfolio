@@ -12,7 +12,7 @@ function App() {
   const headerMenuItems = [
     { label: "Inicio", href: "#hero" },
     { label: "Sobre Mí", href: "#about" },
-    { label: "Proyectos", href: "#projects" },
+    // { label: "Proyectos", href: "#projects" },
     { label: "Contacto", href: "#contact" }
   ];
 
@@ -38,14 +38,13 @@ function App() {
         <HeroSection />
         <AboutSection />
         <Experience></Experience>
-        <ProjectsSection />
+        {/* <ProjectsSection /> */}
         <ContactSection />
       </main>
       
       {/* Footer */}
       <Footer 
         name="Gabriel Forestiero"
-        email="gabyforestiero@gmail.com"
         socialLinks={footerSocialLinks}
       />
     </div>

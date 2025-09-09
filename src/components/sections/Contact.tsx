@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Github, Linkedin, Mail, Send, MapPin, Code, Terminal } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Github, Linkedin, Mail, Send, MapPin, Code, Terminal, CheckCircle, AlertCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -9,27 +10,53 @@ const ContactSection = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simular envío
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    console.log('Form submitted:', formData);
-    alert('¡Mensaje enviado! Te contactaré pronto.');
-    setFormData({ name: '', email: '', message: '' });
-    setIsSubmitting(false);
+    setSubmitStatus(null);
+
+    try {
+      // Parámetros del template de EmailJS
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_name: 'Gabriel', // Tu nombre
+        reply_to: formData.email,
+      };
+
+      // Enviar email usando EmailJS
+      const result = await emailjs.send(
+        'service_374jeej',    // Tu Service ID
+        'template_00ugn7b',   // Tu Template ID
+        templateParams,
+        'zjR8Vtrgn-KgwTl2U'   // Tu Public Key
+      );
+
+      console.log('Email enviado exitosamente:', result);
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Error al enviar email:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+
+      // Limpiar el status después de 5 segundos
+      setTimeout(() => {
+        setSubmitStatus(null);
+      }, 5000);
+    }
   };
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleChange = (e: { target: { name: any; value: any }; }) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
-
 
   return (
     <section id="contact" className="relative min-h-screen bg-black py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -91,8 +118,6 @@ const ContactSection = () => {
           >
             <span className="text-white">&gt;</span>
             <span className="text-cyan-400 ml-2">CONTACTO</span>
-           
-          
           </h2>
           
           <div className="flex items-center justify-center gap-6 mb-6">
@@ -111,9 +136,32 @@ const ContactSection = () => {
               }}
             />
           </div>
-          
-       
         </div>
+
+        {/* Notification de estado */}
+        {submitStatus && (
+          <div 
+            className={`fixed top-4 right-4 z-50 p-4 rounded-lg border backdrop-blur-sm flex items-center gap-3 font-mono text-sm max-w-md transition-all duration-500 ${
+              submitStatus === 'success' 
+                ? 'bg-green-900/80 border-green-400 text-green-400' 
+                : 'bg-red-900/80 border-red-400 text-red-400'
+            }`}
+            style={{
+              animation: 'slideInRight 0.5s ease-out'
+            }}
+          >
+            {submitStatus === 'success' ? (
+              <CheckCircle className="w-5 h-5" />
+            ) : (
+              <AlertCircle className="w-5 h-5" />
+            )}
+            <span>
+              {submitStatus === 'success' 
+                ? '¡Mensaje enviado! Te contactaré pronto.' 
+                : 'Error al enviar. Intenta de nuevo.'}
+            </span>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
           {/* Información de contacto con estilo cyberpunk - CENTRADO */}
@@ -131,22 +179,22 @@ const ContactSection = () => {
                 { 
                   icon: Mail, 
                   label: 'Email', 
-                  value: 'gabriel@forestiero.dev',
-                  href: 'mailto:gabriel@forestiero.dev',
+                  value: 'gabyforestiero@gmail.com',
+                  href: 'mailto:gabyforestiero@gmail.com',
                   color: 'cyan'
                 },
                 { 
                   icon: Linkedin, 
                   label: 'LinkedIn', 
-                  value: 'linkedin.com/in/gabriel-forestiero',
-                  href: 'https://linkedin.com/in/gabriel-forestiero',
+                  value: 'linkedin.com/in/gabriel-forestiero-dev',
+                  href: 'https://www.linkedin.com/in/gabriel-forestiero-dev/',
                   color: 'blue'
                 },
                 { 
                   icon: Github, 
                   label: 'GitHub', 
-                  value: 'github.com/gabriel-forestiero',
-                  href: 'https://github.com/gabriel-forestiero',
+                  value: 'github.com/GabrielForestiero',
+                  href: 'https://github.com/GabrielForestiero',
                   color: 'purple'
                 },
                 { 
@@ -215,7 +263,8 @@ const ContactSection = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300 text-white font-mono placeholder-gray-500 hover:border-gray-600"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300 text-white font-mono placeholder-gray-500 hover:border-gray-600 disabled:opacity-50"
                   placeholder="Tu nombre completo..."
                 />
               </div>
@@ -237,7 +286,8 @@ const ContactSection = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300 text-white font-mono placeholder-gray-500 hover:border-gray-600"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300 text-white font-mono placeholder-gray-500 hover:border-gray-600 disabled:opacity-50"
                   placeholder="tu@email.com"
                 />
               </div>
@@ -258,16 +308,18 @@ const ContactSection = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  disabled={isSubmitting}
                   rows={6}
-                  className="w-full px-4 py-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300 text-white font-mono placeholder-gray-500 resize-none hover:border-gray-600"
-                  placeholder="// Contame sobre tu proyecto, presupuesto, timeline, etc."
+                  className="w-full px-4 py-3 bg-gray-900/70 backdrop-blur-sm border border-gray-700 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300 text-white font-mono placeholder-gray-500 resize-none hover:border-gray-600 disabled:opacity-50"
+                  placeholder="Contame sobre tu proyecto, presupuesto, timeline, etc."
                 />
               </div>
 
               <button
+                type="button"
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="group relative w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 font-mono font-medium rounded-lg transition-all duration-300 flex items-center justify-center gap-3 border border-cyan-400/60 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-400/30 disabled:cursor-not-allowed overflow-hidden hover:scale-[1.02] hover:-translate-y-0.5"
+                className="group relative w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 disabled:from-gray-600 disabled:to-gray-700 text-white px-8 py-4 font-mono font-medium rounded-lg transition-all duration-300 flex items-center justify-center gap-3 border border-cyan-400/60 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-400/30 disabled:cursor-not-allowed overflow-hidden hover:scale-[1.02] hover:-translate-y-0.5 disabled:hover:scale-100 disabled:hover:translate-y-0"
                 style={{
                   opacity: 0,
                   animation: 'slideInUp 0.8s ease-out 0.4s both'
@@ -275,15 +327,12 @@ const ContactSection = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <div
-                      className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"
-                    />
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     <span>ENVIANDO...</span>
                   </>
                 ) : (
                   <>
-                    <span>&gt;</span>
-                    <span>EJECUTAR_ENVIO()</span>
+                    <span>ENVIAR</span>
                     <div className="group-hover:rotate-12 group-hover:translate-x-0.5 transition-transform duration-300">
                       <Send className="w-5 h-5" />
                     </div>
@@ -325,6 +374,17 @@ const ContactSection = () => {
           to {
             opacity: 1;
             transform: translateY(0);
+          }
+        }
+        
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(100%);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
           }
         }
       `}</style>

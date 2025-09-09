@@ -8,12 +8,12 @@ const HeroSection = () => {
 
   const originalText = 'Gabriel Forestiero';
   const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?0123456789';
-  const words = ['Frontend Developer', 'React Specialist', 'UI/UX Designer', 'JavaScript Expert'];
+  const words = ['Frontend Developer', 'React Specialist'];
 
-  // Simplified glitch effect
+  // Efecto de glitch con diferente timing
   useEffect(() => {
     const glitchInterval = setInterval(() => {
-      if (Math.random() < 0.05) {
+      if (Math.random() < 0.06) {
         let glitched = '';
         for (let i = 0; i < originalText.length; i++) {
           if (Math.random() < 0.2) {
@@ -25,21 +25,21 @@ const HeroSection = () => {
         setGlitchText(glitched);
         setTimeout(() => setGlitchText(originalText), 100);
       }
-    }, 3000);
+    }, 4500); // Diferente timing para evitar conflictos
 
     return () => clearInterval(glitchInterval);
   }, []);
 
-  // Simplified word cycling
+  // Cambio de palabras con timing más lento y suave
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWordIndex((prev) => (prev + 1) % words.length);
-    }, 3000);
+    }, 2500); // Más rápido para mejor fluidez
 
     return () => clearInterval(interval);
   }, []);
 
-  // Animation variants with proper typing
+  // Animation variants con mejores transiciones
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -76,11 +76,11 @@ const HeroSection = () => {
 
   const buttonVariants: Variants = {
     hover: {
-      scale: 1.1,
-      y: -8,
+      scale: 1.05,
+      y: -4,
       transition: { duration: 0.3 }
     },
-    tap: { scale: 0.95 }
+    tap: { scale: 0.98 }
   };
 
   const glitchVariants: Variants = {
@@ -238,9 +238,9 @@ const HeroSection = () => {
           </motion.h1>
         </motion.div>
 
-        {/* Typewriter effect */}
+        {/* Typewriter effect mejorado */}
         <motion.div 
-          className="mb-6 relative min-h-[3rem] flex items-center justify-center"
+          className="mb-6 relative min-h-[4rem] flex items-center justify-center"
           variants={itemVariants}
         >
           <div className="flex items-center gap-6 mb-4">
@@ -263,18 +263,25 @@ const HeroSection = () => {
               <AnimatePresence mode="wait">
                 <motion.span
                   key={words[currentWordIndex]}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
+                  initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -15, filter: "blur(4px)" }}
+                  transition={{ 
+                    duration: 0.5,
+                    ease: "easeInOut"
+                  }}
                 >
                   {words[currentWordIndex]}
                 </motion.span>
               </AnimatePresence>
               <motion.span 
                 className="text-purple-400 ml-1"
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 1, repeat: Infinity }}
+                animate={{ opacity: [1, 0.3, 1] }}
+                transition={{ 
+                  duration: 1.2, 
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
               >
                 █
               </motion.span>
@@ -318,28 +325,12 @@ const HeroSection = () => {
 
         {/* Buttons */}
         <motion.div 
-          className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-6"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
           variants={itemVariants}
         >
           <motion.a
-            href="#projects"
-            className="group relative bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-10 py-5 font-mono font-medium flex items-center gap-4 border border-cyan-400/60 hover:border-cyan-400 overflow-hidden hover:shadow-2xl hover:shadow-cyan-400/60 rounded-lg"
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-          >
-            <span className="relative z-10 flex items-center gap-4">
-              <span className="text-lg">&gt;</span>
-              <span className="text-lg">VER_PROYECTOS.exe</span>
-              <motion.div whileHover={{ rotate: 12 }}>
-                <ExternalLink className="w-5 h-5" />
-              </motion.div>
-            </span>
-          </motion.a>
-          
-          <motion.a
             href="#contact"
-            className="group relative border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black px-10 py-5 font-mono font-medium overflow-hidden rounded-lg"
+            className="group relative border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black px-8 py-4 font-mono font-medium overflow-hidden rounded-lg"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
@@ -351,24 +342,24 @@ const HeroSection = () => {
               transition={{ duration: 0.5 }}
               style={{ originX: 0 }}
             />
-            <span className="relative z-10 text-lg">CONTACTO.init()</span>
+            <span className="relative z-10 text-lg">CONTACTO</span>
           </motion.a>
-        </motion.div>
 
-        {/* CV */}
-        <motion.div className="mb-8" variants={itemVariants}>
           <motion.a
-            href="/cv-gabriel-forestiero.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-5 bg-gray-800/80 border-2 border-gray-600 hover:border-cyan-400 text-gray-200 hover:text-white font-mono px-10 py-5 rounded-2xl backdrop-blur-sm hover:bg-gray-700/80 hover:shadow-2xl hover:shadow-cyan-400/40"
-            whileHover={{ scale: 1.05, y: -12 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.3 }}
+            href="/CV-Gabriel-Forestiero-Frontend-2025..pdf"
+            download="Gabriel_Forestiero_CV.pdf" 
+            className="group relative bg-gray-800/70 border-2 border-gray-600/70 hover:border-purple-400/70 text-gray-300 hover:text-purple-300 font-mono px-8 py-4 rounded-lg backdrop-blur-sm hover:bg-gray-700/70 transition-all duration-300 flex items-center gap-3"
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
           >
-            <Download className="w-7 h-7 text-cyan-400" />
-            <span className="text-xl font-semibold">Descargar CV</span>
-            <div className="w-4 h-4 bg-cyan-400 rounded-full" />
+            <motion.div
+              whileHover={{ rotate: 12, scale: 1.1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Download className="w-5 h-5" />
+            </motion.div>
+            <span className="relative z-10 text-lg font-medium">DESCARGAR CV</span>
           </motion.a>
         </motion.div>
 
@@ -380,21 +371,21 @@ const HeroSection = () => {
           {[
             { 
               icon: Github, 
-              href: 'https://github.com/tu-usuario', 
+              href: 'https://github.com/GabrielForestiero', 
               label: 'GitHub',
               color: 'text-gray-300 hover:text-white',
               bgColor: 'hover:bg-gray-700/50'
             },
             { 
               icon: Linkedin, 
-              href: 'https://linkedin.com/in/tu-perfil', 
+              href: 'https://www.linkedin.com/in/gabriel-forestiero-dev/', 
               label: 'LinkedIn',
               color: 'text-blue-400 hover:text-blue-300',
               bgColor: 'hover:bg-blue-900/30'
             },
             { 
               icon: Mail, 
-              href: 'mailto:tu-email@gmail.com', 
+              href: 'mailto:gabyforestiero@gmail.com', 
               label: 'Email',
               color: 'text-cyan-400 hover:text-cyan-300',
               bgColor: 'hover:bg-cyan-900/30'
