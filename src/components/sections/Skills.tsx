@@ -1,5 +1,5 @@
 import { motion, easeOut } from 'framer-motion';
-import { useState, type SetStateAction, useEffect } from 'react';
+import { useState, type SetStateAction } from 'react';
 import {
     Code, Database, Server,
     Palette, GitBranch,
