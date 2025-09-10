@@ -1,11 +1,101 @@
 import { motion, easeOut } from 'framer-motion';
-import { useState, type SetStateAction } from 'react';
+import { useState, type SetStateAction, useEffect } from 'react';
 import {
     Code, Database, Server,
     Palette, GitBranch,
     Wrench,
     ChevronLeft, ChevronRight
 } from 'lucide-react';
+
+// Componente SkillCard extraído y modificado para usar los logos
+type Skill = { name: string; logo: string; };
+type SkillCategory = {
+    category: string;
+    icon: React.ElementType;
+    color: string;
+    bgColor: string;
+    borderColor: string;
+    iconColor: string;
+    skills: Skill[];
+};
+
+interface SkillCardProps {
+    category: SkillCategory;
+    categoryIndex: number;
+    itemVariants: any;
+}
+
+const SkillCard: React.FC<SkillCardProps> = ({ category, categoryIndex, itemVariants }) => {
+    return (
+        <motion.div
+            className={`group relative bg-gray-900/50 backdrop-blur-sm border ${category.borderColor} rounded-lg p-6 hover:bg-gray-800/50 transition-all duration-300 hover:shadow-lg hover:shadow-${category.color}-400/20 min-h-[320px]`}
+            variants={itemVariants}
+            whileHover={{ scale: 1.02, y: -5 }}
+        >
+            {/* Category Header */}
+            <div className="flex items-center gap-3 mb-6">
+                <motion.div
+                    className={`w-12 h-12 ${category.bgColor} border ${category.borderColor} rounded-lg flex items-center justify-center ${category.iconColor}`}
+                    whileHover={{ rotate: 12, scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <category.icon className="w-6 h-6" />
+                </motion.div>
+                <div>
+                    <h3 className={`text-lg font-mono font-semibold text-white group-hover:${category.iconColor} transition-colors`}>
+                        {category.category}
+                    </h3>
+                </div>
+            </div>
+
+            {/* Skills List */}
+            <div className="grid grid-cols-1 gap-3">
+                {category.skills.map((skill, skillIndex) => (
+                    <motion.div
+                        key={skillIndex}
+                        className={`group/skill flex items-center gap-3 p-3 ${category.bgColor} border ${category.borderColor} rounded-lg hover:bg-opacity-20 transition-all duration-300`}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: categoryIndex * 0.1 + skillIndex * 0.05 }}
+                        whileHover={{ scale: 1.02, x: 5 }}
+                    >
+                        <motion.div
+                            className="w-8 h-8 flex items-center justify-center flex-shrink-0"
+                            whileHover={{ scale: 1.2, rotate: 5 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <img
+                                src={skill.logo}
+                                alt={`${skill.name} logo`}
+                                className="w-6 h-6 object-contain"
+                                style={{
+                                    filter: skill.name === 'Next.js' || skill.name === 'GitHub' || skill.name === 'Express' || skill.name === 'Vercel' || skill.name === 'MongoDB' ? 'invert(1)' : 'none'
+                                }}
+                            />
+                        </motion.div>
+                        <span className="text-white font-mono text-sm font-medium flex-grow">
+                            {skill.name}
+                        </span>
+                    </motion.div>
+                ))}
+            </div>
+
+            {/* Status indicator */}
+            <motion.div
+                className="absolute top-3 right-3 w-2 h-2 bg-green-400 rounded-full"
+                animate={{
+                    opacity: [0.5, 1, 0.5],
+                    scale: [1, 1.2, 1]
+                }}
+                transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: categoryIndex * 0.3
+                }}
+            />
+        </motion.div>
+    );
+};
 
 const SkillsSection = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -19,10 +109,18 @@ const SkillsSection = () => {
             borderColor: 'border-cyan-400/30',
             iconColor: 'text-cyan-400',
             skills: [
-                { name: 'React.js', level: 95 },
-                { name: 'Next.js', level: 90 },
-                { name: 'Angular', level: 80 },
-                { name: 'TypeScript', level: 90 }
+                {
+                    name: 'React.js',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'
+                },
+                {
+                    name: 'Next.js',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg'
+                },
+                {
+                    name: 'Angular',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg'
+                },
             ]
         },
         {
@@ -33,10 +131,18 @@ const SkillsSection = () => {
             borderColor: 'border-pink-400/30',
             iconColor: 'text-pink-400',
             skills: [
-                { name: 'Tailwind CSS', level: 95 },
-                { name: 'Sass', level: 85 },
-                { name: 'CSS3', level: 90 },
-                { name: 'Styled Components', level: 90 }
+                {
+                    name: 'Tailwind CSS',
+                    logo: 'https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg'
+                },
+                {
+                    name: 'Sass',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg'
+                },
+                {
+                    name: 'Styled Components',
+                    logo: 'https://styled-components.com/logo.png'
+                }
             ]
         },
         {
@@ -47,9 +153,18 @@ const SkillsSection = () => {
             borderColor: 'border-green-400/30',
             iconColor: 'text-green-400',
             skills: [
-                { name: 'Node.js', level: 85 },
-                { name: 'Express', level: 80 },
-                { name: 'Java', level: 70 },
+                {
+                    name: 'Node.js',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'
+                },
+                {
+                    name: 'Express',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg'
+                },
+                {
+                    name: 'Java',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg'
+                },
             ]
         },
         {
@@ -60,9 +175,18 @@ const SkillsSection = () => {
             borderColor: 'border-blue-400/30',
             iconColor: 'text-blue-400',
             skills: [
-                { name: 'MongoDB', level: 80 },
-                { name: 'MySQL', level: 75 },
-                { name: 'PostgreSQL', level: 70 }
+                {
+                    name: 'MongoDB',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg'
+                },
+                {
+                    name: 'MySQL',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'
+                },
+                {
+                    name: 'PostgreSQL',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg'
+                }
             ]
         },
         {
@@ -73,10 +197,18 @@ const SkillsSection = () => {
             borderColor: 'border-orange-400/30',
             iconColor: 'text-orange-400',
             skills: [
-                { name: 'Docker', level: 75 },
-                { name: 'Postman', level: 90 },
-                { name: 'Vercel', level: 85 },
-                { name: 'REST APIs', level: 90 }
+                {
+                    name: 'Docker',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'
+                },
+                {
+                    name: 'Postman',
+                    logo: 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg'
+                },
+                {
+                    name: 'JWT',
+                    logo: 'https://jwt.io/img/pic_logo.svg'
+                },
             ]
         },
         {
@@ -87,9 +219,18 @@ const SkillsSection = () => {
             borderColor: 'border-purple-400/30',
             iconColor: 'text-purple-400',
             skills: [
-                { name: 'GitLab', level: 85 },
-                { name: 'GitHub', level: 90 },
-                { name: 'Linux', level: 80 }
+                {
+                    name: 'GitLab',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg'
+                },
+                {
+                    name: 'GitHub',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg'
+                },
+                {
+                    name: 'Linux',
+                    logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg'
+                }
             ]
         }
     ];
@@ -142,9 +283,9 @@ const SkillsSection = () => {
                         className="w-full h-full"
                         style={{
                             backgroundImage: `
-                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px)
-              `,
+                                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px)
+                            `,
                             backgroundSize: '50px 50px'
                         }}
                     />
@@ -270,8 +411,8 @@ const SkillsSection = () => {
                                     key={index}
                                     onClick={() => goToSlide(index)}
                                     className={`w-3 h-3 rounded-full transition-all duration-300 ${currentSlide === index
-                                            ? 'bg-purple-400 shadow-lg shadow-purple-400/50'
-                                            : 'bg-gray-600 hover:bg-gray-500'
+                                        ? 'bg-purple-400 shadow-lg shadow-purple-400/50'
+                                        : 'bg-gray-600 hover:bg-gray-500'
                                         }`}
                                     whileHover={{ scale: 1.2 }}
                                     whileTap={{ scale: 0.9 }}
@@ -295,97 +436,9 @@ const SkillsSection = () => {
                             {currentSlide + 1} / {skillCategories.length}
                         </span>
                     </div>
-
-                    {/* Swipe Indicator */}
-                    <motion.div
-                        className="text-center mt-2"
-                        initial={{ opacity: 1 }}
-                        animate={{ opacity: [1, 0.5, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                    >
-                        <span className="text-gray-500 font-mono text-xs">
-                            ← Desliza para ver más →
-                        </span>
-                    </motion.div>
                 </div>
             </motion.div>
         </section>
-    );
-};
-
-// Componente SkillCard extraído para reutilización
-type Skill = { name: string; level: number };
-type SkillCategory = {
-    category: string;
-    icon: React.ElementType;
-    color: string;
-    bgColor: string;
-    borderColor: string;
-    iconColor: string;
-    skills: Skill[];
-};
-
-interface SkillCardProps {
-    category: SkillCategory;
-    categoryIndex: number;
-    itemVariants: any;
-}
-
-const SkillCard: React.FC<SkillCardProps> = ({ category, categoryIndex, itemVariants }) => {
-    return (
-        <motion.div
-            className={`group relative bg-gray-900/50 backdrop-blur-sm border ${category.borderColor} rounded-lg p-6 hover:bg-gray-800/50 transition-all duration-300 hover:shadow-lg hover:shadow-${category.color}-400/20 min-h-[320px]`}
-            variants={itemVariants}
-            whileHover={{ scale: 1.02, y: -5 }}
-        >
-            {/* Category Header */}
-            <div className="flex items-center gap-3 mb-6">
-                <motion.div
-                    className={`w-12 h-12 ${category.bgColor} border ${category.borderColor} rounded-lg flex items-center justify-center ${category.iconColor}`}
-                    whileHover={{ rotate: 12, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                >
-                    <category.icon className="w-6 h-6" />
-                </motion.div>
-                <div>
-                    <h3 className={`text-lg font-mono font-semibold text-white group-hover:${category.iconColor} transition-colors`}>
-                        {category.category}
-                    </h3>
-                </div>
-            </div>
-
-            {/* Skills List */}
-            <div className="grid grid-cols-1 gap-3">
-                {category.skills.map((skill, skillIndex) => (
-                    <motion.div
-                        key={skillIndex}
-                        className={`group/skill flex items-center gap-3 p-3 ${category.bgColor} border ${category.borderColor} rounded-lg hover:bg-opacity-20 transition-all duration-300`}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: categoryIndex * 0.1 + skillIndex * 0.05 }}
-                        whileHover={{ scale: 1.02, x: 5 }}
-                    >
-                        <span className="text-white font-mono text-sm font-medium flex-grow">
-                            {skill.name}
-                        </span>
-                    </motion.div>
-                ))}
-            </div>
-
-            {/* Status indicator */}
-            <motion.div
-                className="absolute top-3 right-3 w-2 h-2 bg-green-400 rounded-full"
-                animate={{
-                    opacity: [0.5, 1, 0.5],
-                    scale: [1, 1.2, 1]
-                }}
-                transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: categoryIndex * 0.3
-                }}
-            />
-        </motion.div>
     );
 };
 

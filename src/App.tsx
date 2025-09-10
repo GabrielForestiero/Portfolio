@@ -13,7 +13,10 @@ function App() {
     { label: "Inicio", href: "#hero" },
     { label: "Sobre Mí", href: "#about" },
     // { label: "Proyectos", href: "#projects" },
+    { label: "Experiencia", href: "#experience" },
+    { label: "Habilidades", href: "#skills" },
     { label: "Contacto", href: "#contact" }
+   
   ];
 
   // Configuración para el Footer

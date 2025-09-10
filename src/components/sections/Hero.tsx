@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { Download, ChevronDown, Code, Palette, Zap, Cpu, CircuitBoard, Github, Linkedin, Mail } from 'lucide-react';
 
 const HeroSection = () => {
   const [glitchText, setGlitchText] = useState('Gabriel Forestiero');
+  const [displayedText, setDisplayedText] = useState('');
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
 
   const originalText = 'Gabriel Forestiero';
   const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?0123456789';
-  const words = ['Frontend Developer', 'React Specialist'];
+  const words = ['Desarrollador Frontend'];
 
-  // Efecto de glitch con diferente timing
+    const codeSnippets = [
+    '0', '1'
+  ];
+
+  // Efecto de glitch
   useEffect(() => {
     const glitchInterval = setInterval(() => {
       if (Math.random() < 0.06) {
@@ -30,14 +36,38 @@ const HeroSection = () => {
     return () => clearInterval(glitchInterval);
   }, []);
 
-  // Cambio de palabras con timing más lento y suave
+  // Efecto de tipeo mejorado
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prev) => (prev + 1) % words.length);
-    }, 2500);
+    const currentWord = words[currentWordIndex];
+    let timeoutId: ReturnType<typeof setTimeout>;
 
-    return () => clearInterval(interval);
-  }, []);
+    if (isTyping) {
+      // Escribiendo
+      if (displayedText.length < currentWord.length) {
+        timeoutId = setTimeout(() => {
+          setDisplayedText(currentWord.slice(0, displayedText.length + 1));
+        }, 100 + Math.random() * 100); // Velocidad variable para efecto más natural
+      } else {
+        // Terminó de escribir, esperar antes de borrar
+        timeoutId = setTimeout(() => {
+          setIsTyping(false);
+        }, 5000);
+      }
+    } else {
+      // Borrando
+      if (displayedText.length > 0) {
+        timeoutId = setTimeout(() => {
+          setDisplayedText(displayedText.slice(0, -1));
+        }, 50);
+      } else {
+        // Terminó de borrar, cambiar a la siguiente palabra
+        setCurrentWordIndex((prev) => (prev + 1) % words.length);
+        setIsTyping(true);
+      }
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [displayedText, currentWordIndex, isTyping, words]);
 
   // Animation variants con mejores transiciones
   const containerVariants: Variants = {
@@ -130,8 +160,9 @@ const HeroSection = () => {
               }}
             >
               {Array.from({ length: 50 }, () => 
-                String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))
-              ).join('\n')}
+  codeSnippets[Math.floor(Math.random() * codeSnippets.length)]
+).join('\n')}
+
             </motion.div>
           ))}
           {/* Matrix rain simplificado para mobile */}
@@ -150,9 +181,9 @@ const HeroSection = () => {
                 delay: Math.random() * 20
               }}
             >
-              {Array.from({ length: 30 }, () => 
-                String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))
-              ).join('\n')}
+            {Array.from({ length: 50 }, () => 
+  codeSnippets[Math.floor(Math.random() * codeSnippets.length)]
+).join('\n')}
             </motion.div>
           ))}
         </div>
@@ -279,7 +310,7 @@ const HeroSection = () => {
           </motion.h1>
         </motion.div>
 
-        {/* Typewriter effect - más compacto en mobile */}
+        {/* Typewriter effect mejorado */}
         <motion.div 
           className="mb-4 sm:mb-6 relative min-h-[3rem] sm:min-h-[4rem] flex items-center justify-center"
           variants={itemVariants}
@@ -298,28 +329,20 @@ const HeroSection = () => {
               transition={{ duration: 1, delay: 1 }}
             />
           </div>
+          
           <h2 className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-mono font-semibold text-cyan-400 absolute">
             <span className="text-purple-400 mr-2 sm:mr-3">&gt;</span>
             <span className="inline-block min-w-[200px] xs:min-w-[250px] sm:min-w-[300px] text-left">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={words[currentWordIndex]}
-                  initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -15, filter: "blur(4px)" }}
-                  transition={{ 
-                    duration: 0.5,
-                    ease: "easeInOut"
-                  }}
-                >
-                  {words[currentWordIndex]}
-                </motion.span>
-              </AnimatePresence>
+              <span className="text-cyan-400">
+                {displayedText}
+              </span>
               <motion.span 
                 className="text-purple-400 ml-1"
-                animate={{ opacity: [1, 0.3, 1] }}
+                animate={{ 
+                  opacity: isTyping ? [1, 0.3, 1] : [1, 0, 1] 
+                }}
                 transition={{ 
-                  duration: 1.2, 
+                  duration: isTyping ? 0.5 : 1.2, 
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
