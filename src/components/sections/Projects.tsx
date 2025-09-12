@@ -32,7 +32,6 @@ const ProjectsSection = () => {
     
   ];
 
-  // Glitch effect for project titles
   useEffect(() => {
     const interval = setInterval(() => {
       if (Math.random() < 0.1) {
@@ -56,9 +55,9 @@ const ProjectsSection = () => {
 
   return (
     <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
-      {/* Background effects */}
+     
       <div className="absolute inset-0">
-        {/* Matrix rain - lighter */}
+       
         <div className="absolute inset-0 overflow-hidden opacity-3">
           {Array.from({ length: 15 }, (_, i) => (
             <motion.div
@@ -82,7 +81,7 @@ const ProjectsSection = () => {
           ))}
         </div>
 
-        {/* Circuit lines */}
+     
         <div className="absolute inset-0 opacity-5">
           <svg className="w-full h-full">
             {Array.from({ length: 6 }, (_, i) => (
@@ -118,7 +117,7 @@ const ProjectsSection = () => {
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Header */}
+      
         <motion.div 
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -157,7 +156,7 @@ const ProjectsSection = () => {
           </p>
         </motion.div>
 
-        {/* Projects Grid */}
+      
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => {
             const IconComponent = project.icon;
@@ -172,7 +171,7 @@ const ProjectsSection = () => {
                 onHoverEnd={() => setHoveredProject(null)}
                 whileHover={{ y: -8, scale: 1.02 }}
               >
-                {/* Status indicator */}
+                
                 <div className="absolute top-4 right-4 z-20">
                   <div className="flex items-center gap-2 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-600">
                     <motion.div
@@ -188,7 +187,7 @@ const ProjectsSection = () => {
                   </div>
                 </div>
 
-                {/* Project image placeholder with circuit pattern */}
+               
                 <div className="relative h-48 bg-black/80 border-b border-gray-700/60 overflow-hidden">
                   <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                     <motion.div
@@ -202,7 +201,7 @@ const ProjectsSection = () => {
                     </motion.div>
                   </div>
                   
-                  {/* Circuit overlay */}
+                 
                   <svg className="absolute inset-0 w-full h-full opacity-20">
                     <motion.path
                       d="M0,96 L48,96 L64,80 L128,80 L144,96 L192,96"
@@ -224,7 +223,7 @@ const ProjectsSection = () => {
                     />
                   </svg>
 
-                  {/* Hover overlay with buttons */}
+                 
                   <motion.div
                     className="absolute inset-0 bg-black/80 flex items-center justify-center space-x-6"
                     initial={{ opacity: 0 }}
@@ -253,7 +252,7 @@ const ProjectsSection = () => {
                 </div>
                 
                 <div className="p-6">
-                  {/* Project info header */}
+                  
                   <div className="flex items-center justify-between mb-3">
                     <motion.h3 
                       className="text-xl font-mono font-bold text-white"
@@ -273,7 +272,7 @@ const ProjectsSection = () => {
                     {project.description}
                   </p>
                   
-                  {/* Tech stack */}
+                  
                   <div className="flex flex-wrap gap-2">
                     {project.techs.map((tech, techIndex) => (
                       <motion.span 
@@ -291,7 +290,7 @@ const ProjectsSection = () => {
                   </div>
                 </div>
 
-                {/* Corner decorations */}
+                
                 <div className="absolute inset-0 pointer-events-none opacity-30 group-hover:opacity-60 transition-opacity duration-500">
                   <div className="absolute top-2 left-2 w-4 h-4 border-l border-t border-cyan-400/60" />
                   <div className="absolute top-2 right-2 w-4 h-4 border-r border-t border-cyan-400/60" />
@@ -303,7 +302,7 @@ const ProjectsSection = () => {
           })}
         </div>
 
-        {/* Footer */}
+        
         <motion.div 
           className="text-center mt-16"
           initial={{ opacity: 0 }}

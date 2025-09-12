@@ -7,7 +7,6 @@ import {
     ChevronLeft, ChevronRight
 } from 'lucide-react';
 
-// Componente SkillCard extraído y modificado para usar los logos
 type Skill = { name: string; logo: string; };
 type SkillCategory = {
     category: string;
@@ -32,7 +31,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ category, categoryIndex, itemVari
             variants={itemVariants}
             whileHover={{ scale: 1.02, y: -5 }}
         >
-            {/* Category Header */}
+            
             <div className="flex items-center gap-3 mb-6">
                 <motion.div
                     className={`w-12 h-12 ${category.bgColor} border ${category.borderColor} rounded-lg flex items-center justify-center ${category.iconColor}`}
@@ -48,7 +47,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ category, categoryIndex, itemVari
                 </div>
             </div>
 
-            {/* Skills List */}
+           
             <div className="grid grid-cols-1 gap-3">
                 {category.skills.map((skill, skillIndex) => (
                     <motion.div
@@ -80,7 +79,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ category, categoryIndex, itemVari
                 ))}
             </div>
 
-            {/* Status indicator */}
+            
             <motion.div
                 className="absolute top-3 right-3 w-2 h-2 bg-green-400 rounded-full"
                 animate={{
@@ -273,11 +272,11 @@ const SkillsSection = () => {
 
     return (
         <section id="skills" className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-            {/* Background con efectos cyberpunk */}
+            
             <div className="absolute inset-0">
                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-gray-900 to-black"></div>
 
-                {/* Grid pattern */}
+               
                 <div className="absolute inset-0 opacity-5">
                     <div
                         className="w-full h-full"
@@ -291,7 +290,7 @@ const SkillsSection = () => {
                     />
                 </div>
 
-                {/* Floating particles */}
+                
                 <div className="absolute inset-0">
                     {Array.from({ length: 15 }, (_, i) => (
                         <motion.div
@@ -323,7 +322,7 @@ const SkillsSection = () => {
                 whileInView="visible"
                 viewport={{ once: true }}
             >
-                {/* Header */}
+                
                 <motion.div className="text-center mb-16" variants={itemVariants}>
                     <motion.h2
                         className="text-3xl sm:text-4xl lg:text-5xl font-mono font-bold mb-6"
@@ -359,7 +358,7 @@ const SkillsSection = () => {
                     </div>
                 </motion.div>
 
-                {/* Desktop Grid */}
+                
                 <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {skillCategories.map((category, categoryIndex) => (
                         <SkillCard
@@ -371,9 +370,9 @@ const SkillsSection = () => {
                     ))}
                 </div>
 
-                {/* Mobile/Tablet Carousel */}
+                
                 <div className="lg:hidden relative">
-                    {/* Carousel Container */}
+                    
                     <div className="relative overflow-hidden rounded-xl">
                         <motion.div
                             className="flex transition-transform duration-300 ease-out"
@@ -393,7 +392,7 @@ const SkillsSection = () => {
                         </motion.div>
                     </div>
 
-                    {/* Navigation Buttons */}
+                  
                     <div className="flex justify-between items-center mt-6">
                         <motion.button
                             onClick={prevSlide}
@@ -404,7 +403,7 @@ const SkillsSection = () => {
                             <ChevronLeft className="w-6 h-6" />
                         </motion.button>
 
-                        {/* Dots Indicator */}
+                        
                         <div className="flex gap-2">
                             {skillCategories.map((_, index) => (
                                 <motion.button
@@ -430,7 +429,7 @@ const SkillsSection = () => {
                         </motion.button>
                     </div>
 
-                    {/* Category Counter */}
+                   
                     <div className="text-center mt-4">
                         <span className="text-gray-400 font-mono text-sm">
                             {currentSlide + 1} / {skillCategories.length}

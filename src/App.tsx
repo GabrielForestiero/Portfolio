@@ -8,18 +8,17 @@ import SkillsSection from './components/sections/Skills';
 
 
 function App() {
-  // Configuración para el Header
+
   const headerMenuItems = [
     { label: "Inicio", href: "#hero" },
     { label: "Sobre Mí", href: "#about" },
-    // { label: "Proyectos", href: "#projects" },
     { label: "Experiencia", href: "#experience" },
     { label: "Habilidades", href: "#skills" },
     { label: "Contacto", href: "#contact" }
-   
+
   ];
 
-  // Configuración para el Footer
+
   const footerSocialLinks = {
     github: "https://github.com/GabrielForestiero",
     linkedin: "https://linkedin.com/in/gabriel-forestiero-dev/",
@@ -28,26 +27,26 @@ function App() {
 
   return (
     <div className="App">
-      {/* Header con navegación smooth scroll */}
-      <Header 
+
+      <Header
         title=""
         menuItems={headerMenuItems}
         showNotifications={false}
         showCart={false}
       />
-      
-      {/* Contenido principal */}
+
+
       <main>
         <HeroSection />
         <AboutSection />
         <Experience></Experience>
         <SkillsSection />
-        {/* <ProjectsSection /> */}
+
         <ContactSection />
       </main>
-      
-      {/* Footer */}
-      <Footer 
+
+
+      <Footer
         name="Gabriel Forestiero"
         socialLinks={footerSocialLinks}
       />

@@ -23,11 +23,11 @@ const AboutSection = () => {
 
   return (
     <section id="about" className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background con gradiente que inicia oscuro (conecta con Hero) y termina claro */}
+
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-slate-900"></div>
 
-        {/* Matrix rain sutil */}
+
         <div className="absolute inset-0 overflow-hidden opacity-3">
           {Array.from({ length: 8 }, (_, i) => (
             <motion.div
@@ -51,7 +51,7 @@ const AboutSection = () => {
           ))}
         </div>
 
-        {/* Conexiones hexagonales */}
+
         <div className="absolute inset-0 opacity-5">
           <svg className="w-full h-full">
             {Array.from({ length: 6 }, (_, i) => (
@@ -80,7 +80,7 @@ const AboutSection = () => {
         initial="hidden"
         animate="visible"
       >
-        {/* Header con estilo cyberpunk */}
+
         <motion.div className="text-center mb-16" variants={itemVariants}>
           <motion.h2
             className="text-3xl sm:text-4xl lg:text-5xl font-mono font-bold mb-6"
@@ -116,7 +116,7 @@ const AboutSection = () => {
           </div>
         </motion.div>
 
-        {/* Contenido principal - Solo información personal */}
+
         <div className="flex justify-center">
           <motion.div variants={itemVariants} className="max-w-4xl">
             <div className="text-gray-300 leading-relaxed font-mono">
@@ -149,8 +149,8 @@ const AboutSection = () => {
                   </p>
                 </div>
 
-                {/* Indicador de estado activo */}
-              
+
+
               </motion.div>
             </div>
           </motion.div>

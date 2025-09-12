@@ -9,5 +9,5 @@ html #root {
 
 
 .main-content {
-  flex: 1; /* Esto hace que el contenido principal ocupe todo el espacio restante */
+  flex: 1; 
 }

@@ -12,11 +12,10 @@ const HeroSection = () => {
   const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?0123456789';
   const words = ['Desarrollador Frontend'];
 
-    const codeSnippets = [
+  const codeSnippets = [
     '0', '1'
   ];
 
-  // Efecto de glitch
   useEffect(() => {
     const glitchInterval = setInterval(() => {
       if (Math.random() < 0.06) {
@@ -36,31 +35,29 @@ const HeroSection = () => {
     return () => clearInterval(glitchInterval);
   }, []);
 
-  // Efecto de tipeo mejorado
   useEffect(() => {
     const currentWord = words[currentWordIndex];
     let timeoutId: ReturnType<typeof setTimeout>;
 
     if (isTyping) {
-      // Escribiendo
       if (displayedText.length < currentWord.length) {
         timeoutId = setTimeout(() => {
           setDisplayedText(currentWord.slice(0, displayedText.length + 1));
-        }, 100 + Math.random() * 100); // Velocidad variable para efecto más natural
+        }, 100 + Math.random() * 100);
       } else {
-        // Terminó de escribir, esperar antes de borrar
+
         timeoutId = setTimeout(() => {
           setIsTyping(false);
         }, 5000);
       }
     } else {
-      // Borrando
+
       if (displayedText.length > 0) {
         timeoutId = setTimeout(() => {
           setDisplayedText(displayedText.slice(0, -1));
         }, 50);
       } else {
-        // Terminó de borrar, cambiar a la siguiente palabra
+
         setCurrentWordIndex((prev) => (prev + 1) % words.length);
         setIsTyping(true);
       }
@@ -69,7 +66,7 @@ const HeroSection = () => {
     return () => clearTimeout(timeoutId);
   }, [displayedText, currentWordIndex, isTyping, words]);
 
-  // Animation variants con mejores transiciones
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -138,11 +135,11 @@ const HeroSection = () => {
 
   return (
     <section className="min-h-screen relative overflow-hidden bg-black flex items-center justify-center px-3 sm:px-6 lg:px-8" style={{ height: 'calc(100vh - 80px)' }}>
-      {/* Background */}
+
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-gray-900 to-black"></div>
-        
-        {/* Matrix rain - reducido en mobile */}
+
+
         <div className="absolute inset-0 overflow-hidden opacity-5">
           {Array.from({ length: 15 }, (_, i) => (
             <motion.div
@@ -159,13 +156,13 @@ const HeroSection = () => {
                 delay: Math.random() * 15
               }}
             >
-              {Array.from({ length: 50 }, () => 
-  codeSnippets[Math.floor(Math.random() * codeSnippets.length)]
-).join('\n')}
+              {Array.from({ length: 50 }, () =>
+                codeSnippets[Math.floor(Math.random() * codeSnippets.length)]
+              ).join('\n')}
 
             </motion.div>
           ))}
-          {/* Matrix rain simplificado para mobile */}
+
           {Array.from({ length: 6 }, (_, i) => (
             <motion.div
               key={`mobile-${i}`}
@@ -181,14 +178,14 @@ const HeroSection = () => {
                 delay: Math.random() * 20
               }}
             >
-            {Array.from({ length: 50 }, () => 
-  codeSnippets[Math.floor(Math.random() * codeSnippets.length)]
-).join('\n')}
+              {Array.from({ length: 50 }, () =>
+                codeSnippets[Math.floor(Math.random() * codeSnippets.length)]
+              ).join('\n')}
             </motion.div>
           ))}
         </div>
 
-        {/* Hexagonal connections - oculto en mobile */}
+
         <div className="absolute inset-0 opacity-10 hidden sm:block">
           <svg className="w-full h-full">
             {Array.from({ length: 8 }, (_, i) => (
@@ -225,7 +222,7 @@ const HeroSection = () => {
           </svg>
         </div>
 
-        {/* Ripple waves - menos en mobile */}
+
         <div className="absolute inset-0 flex items-center justify-center">
           {Array.from({ length: 2 }, (_, i) => (
             <motion.div
@@ -270,8 +267,8 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Corner decorations - más pequeñas en mobile */}
-      <motion.div 
+
+      <motion.div
         className="absolute inset-0 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -283,16 +280,16 @@ const HeroSection = () => {
         <div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 w-6 h-6 sm:w-8 sm:h-8 border-r-2 border-b-2 border-cyan-400/30" />
       </motion.div>
 
-      {/* Main content */}
-      <motion.div 
+
+      <motion.div
         className="text-center max-w-5xl mx-auto relative z-10 py-4 sm:py-8"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Name with glitch - tamaños más apropiados */}
+
         <motion.div className="mb-4 sm:mb-6" variants={itemVariants}>
-          <motion.h1 
+          <motion.h1
             className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-mono font-bold mb-3 sm:mb-4 relative leading-tight"
             variants={glitchVariants}
             animate={glitchText !== originalText ? "glitch" : "normal"}
@@ -310,39 +307,39 @@ const HeroSection = () => {
           </motion.h1>
         </motion.div>
 
-        {/* Typewriter effect mejorado */}
-        <motion.div 
+
+        <motion.div
           className="mb-4 sm:mb-6 relative min-h-[3rem] sm:min-h-[4rem] flex items-center justify-center"
           variants={itemVariants}
         >
           <div className="flex items-center gap-4 sm:gap-6 mb-3 sm:mb-4">
-            <motion.div 
+            <motion.div
               className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent max-w-16 sm:max-w-24"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1, delay: 1 }}
             />
-            <motion.div 
+            <motion.div
               className="flex-1 h-px bg-gradient-to-l from-transparent via-cyan-400 to-transparent max-w-16 sm:max-w-24"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1, delay: 1 }}
             />
           </div>
-          
+
           <h2 className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-mono font-semibold text-cyan-400 absolute">
             <span className="text-purple-400 mr-2 sm:mr-3">&gt;</span>
             <span className="inline-block min-w-[200px] xs:min-w-[250px] sm:min-w-[300px] text-left">
               <span className="text-cyan-400">
                 {displayedText}
               </span>
-              <motion.span 
+              <motion.span
                 className="text-purple-400 ml-1"
-                animate={{ 
-                  opacity: isTyping ? [1, 0.3, 1] : [1, 0, 1] 
+                animate={{
+                  opacity: isTyping ? [1, 0.3, 1] : [1, 0, 1]
                 }}
-                transition={{ 
-                  duration: isTyping ? 0.5 : 1.2, 
+                transition={{
+                  duration: isTyping ? 0.5 : 1.2,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
@@ -353,8 +350,8 @@ const HeroSection = () => {
           </h2>
         </motion.div>
 
-        {/* Skills - más compactas en mobile */}
-        <motion.div 
+
+        <motion.div
           className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6 sm:mb-8"
           variants={itemVariants}
         >
@@ -387,8 +384,8 @@ const HeroSection = () => {
           ))}
         </motion.div>
 
-        {/* Buttons - ancho reducido */}
-        <motion.div 
+
+        <motion.div
           className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center items-center mb-6 sm:mb-8 max-w-sm sm:max-w-none mx-auto"
           variants={itemVariants}
         >
@@ -399,7 +396,7 @@ const HeroSection = () => {
             whileHover="hover"
             whileTap="tap"
           >
-            <motion.div 
+            <motion.div
               className="absolute inset-0 bg-cyan-400"
               initial={{ scaleX: 0 }}
               whileHover={{ scaleX: 1 }}
@@ -411,7 +408,7 @@ const HeroSection = () => {
 
           <motion.a
             href="/CV-Gabriel-Forestiero-Frontend-2025..pdf"
-            download="Gabriel_Forestiero_CV.pdf" 
+            download="Gabriel_Forestiero_CV.pdf"
             className="w-full sm:w-auto group relative bg-gray-800/70 border-2 border-gray-600/70 hover:border-purple-400/70 text-gray-300 hover:text-purple-300 font-mono px-8 py-3 sm:px-8 sm:py-4 rounded-lg backdrop-blur-sm hover:bg-gray-700/70 transition-all duration-300 flex items-center justify-center gap-3"
             variants={buttonVariants}
             whileHover="hover"
@@ -427,29 +424,29 @@ const HeroSection = () => {
           </motion.a>
         </motion.div>
 
-        {/* Social Icons - más compactos en mobile */}
-        <motion.div 
+
+        <motion.div
           className="flex justify-center gap-4 sm:gap-6 mb-6 sm:mb-8"
           variants={itemVariants}
         >
           {[
-            { 
-              icon: Github, 
-              href: 'https://github.com/GabrielForestiero', 
+            {
+              icon: Github,
+              href: 'https://github.com/GabrielForestiero',
               label: 'GitHub',
               color: 'text-gray-300 hover:text-white',
               bgColor: 'hover:bg-gray-700/50'
             },
-            { 
-              icon: Linkedin, 
-              href: 'https://www.linkedin.com/in/gabriel-forestiero-dev/', 
+            {
+              icon: Linkedin,
+              href: 'https://www.linkedin.com/in/gabriel-forestiero-dev/',
               label: 'LinkedIn',
               color: 'text-blue-400 hover:text-blue-300',
               bgColor: 'hover:bg-blue-900/30'
             },
-            { 
-              icon: Mail, 
-              href: 'mailto:gabyforestiero@gmail.com', 
+            {
+              icon: Mail,
+              href: 'mailto:gabyforestiero@gmail.com',
               label: 'Email',
               color: 'text-cyan-400 hover:text-cyan-300',
               bgColor: 'hover:bg-cyan-900/30'
@@ -473,8 +470,8 @@ const HeroSection = () => {
               >
                 <social.icon className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors duration-300 ${social.color}`} />
               </motion.div>
-              
-              {/* Tooltip - oculto en mobile */}
+
+
               <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-sm px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none font-mono hidden sm:block">
                 {social.label}
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45" />
@@ -483,8 +480,8 @@ const HeroSection = () => {
           ))}
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div 
+
+        <motion.div
           className="flex flex-col items-center"
           variants={itemVariants}
         >

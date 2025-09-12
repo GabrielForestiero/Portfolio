@@ -18,21 +18,20 @@ const ContactSection = () => {
     setSubmitStatus(null);
 
     try {
-      // Parámetros del template de EmailJS
+
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
         message: formData.message,
-        to_name: 'Gabriel', // Tu nombre
+        to_name: 'Gabriel',
         reply_to: formData.email,
       };
 
-      // Enviar email usando EmailJS
       const result = await emailjs.send(
-        'service_374jeej',    // Tu Service ID
-        'template_00ugn7b',   // Tu Template ID
+        'service_374jeej',
+        'template_00ugn7b',
         templateParams,
-        'zjR8Vtrgn-KgwTl2U'   // Tu Public Key
+        'zjR8Vtrgn-KgwTl2U'
       );
 
       console.log('Email enviado exitosamente:', result);
@@ -44,7 +43,7 @@ const ContactSection = () => {
     } finally {
       setIsSubmitting(false);
 
-      // Limpiar el status después de 5 segundos
+
       setTimeout(() => {
         setSubmitStatus(null);
       }, 5000);
@@ -60,30 +59,30 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="relative min-h-screen bg-black py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background similar al Hero */}
+
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-gray-900 to-black"></div>
-        
-        {/* Matrix rain sutil */}
+
+
         <div className="absolute inset-0 overflow-hidden opacity-3">
           {Array.from({ length: 8 }, (_, i) => (
             <div
               key={i}
               className="absolute text-cyan-400/20 font-mono text-xs whitespace-pre animate-pulse"
-              style={{ 
+              style={{
                 left: `${i * 12}%`,
                 animationDelay: `${i * 2}s`,
                 animationDuration: `${20 + Math.random() * 10}s`
               }}
             >
-              {Array.from({ length: 30 }, () => 
+              {Array.from({ length: 30 }, () =>
                 Math.random() > 0.5 ? '1' : '0'
               ).join('\n')}
             </div>
           ))}
         </div>
 
-        {/* Conexiones hexagonales */}
+
         <div className="absolute inset-0 opacity-5">
           <svg className="w-full h-full">
             {Array.from({ length: 6 }, (_, i) => (
@@ -108,9 +107,9 @@ const ContactSection = () => {
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Header con estilo cyberpunk */}
+
         <div className="text-center mb-16">
-          <h2 
+          <h2
             className="text-3xl sm:text-4xl lg:text-5xl font-mono font-bold mb-6"
             style={{
               textShadow: '0 0 20px rgba(0, 255, 255, 0.3)',
@@ -119,16 +118,16 @@ const ContactSection = () => {
             <span className="text-white">&gt;</span>
             <span className="text-cyan-400 ml-2">CONTACTO</span>
           </h2>
-          
+
           <div className="flex items-center justify-center gap-6 mb-6">
-            <div 
+            <div
               className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent max-w-32"
               style={{
                 animation: 'scaleX 1s ease-out 0.5s both',
                 transformOrigin: 'center'
               }}
             />
-            <div 
+            <div
               className="flex-1 h-px bg-gradient-to-l from-transparent via-cyan-400 to-transparent max-w-32"
               style={{
                 animation: 'scaleX 1s ease-out 0.5s both',
@@ -138,14 +137,13 @@ const ContactSection = () => {
           </div>
         </div>
 
-        {/* Notification de estado */}
+
         {submitStatus && (
-          <div 
-            className={`fixed top-4 right-4 z-50 p-4 rounded-lg border backdrop-blur-sm flex items-center gap-3 font-mono text-sm max-w-md transition-all duration-500 ${
-              submitStatus === 'success' 
-                ? 'bg-green-900/80 border-green-400 text-green-400' 
+          <div
+            className={`fixed top-4 right-4 z-50 p-4 rounded-lg border backdrop-blur-sm flex items-center gap-3 font-mono text-sm max-w-md transition-all duration-500 ${submitStatus === 'success'
+                ? 'bg-green-900/80 border-green-400 text-green-400'
                 : 'bg-red-900/80 border-red-400 text-red-400'
-            }`}
+              }`}
             style={{
               animation: 'slideInRight 0.5s ease-out'
             }}
@@ -156,50 +154,50 @@ const ContactSection = () => {
               <AlertCircle className="w-5 h-5" />
             )}
             <span>
-              {submitStatus === 'success' 
-                ? '¡Mensaje enviado! Te contactaré pronto.' 
+              {submitStatus === 'success'
+                ? '¡Mensaje enviado! Te contactaré pronto.'
                 : 'Error al enviar. Intenta de nuevo.'}
             </span>
           </div>
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
-          {/* Información de contacto con estilo cyberpunk - CENTRADO */}
+
           <div className="flex flex-col items-center">
-            <h3 
+            <h3
               className="text-2xl font-mono font-bold text-white mb-8 text-center"
               style={{ textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}
             >
               <span className="text-cyan-400">$</span> CONECTAR DIRECTAMENTE
             </h3>
-            
-            {/* Container centrado para las cards */}
+
+
             <div className="w-full max-w-md space-y-6 mb-8">
               {[
-                { 
-                  icon: Mail, 
-                  label: 'Email', 
+                {
+                  icon: Mail,
+                  label: 'Email',
                   value: 'gabyforestiero@gmail.com',
                   href: 'mailto:gabyforestiero@gmail.com',
                   color: 'cyan'
                 },
-                { 
-                  icon: Linkedin, 
-                  label: 'LinkedIn', 
+                {
+                  icon: Linkedin,
+                  label: 'LinkedIn',
                   value: 'linkedin.com/in/gabriel-forestiero-dev',
                   href: 'https://www.linkedin.com/in/gabriel-forestiero-dev/',
                   color: 'blue'
                 },
-                { 
-                  icon: Github, 
-                  label: 'GitHub', 
+                {
+                  icon: Github,
+                  label: 'GitHub',
                   value: 'github.com/GabrielForestiero',
                   href: 'https://github.com/GabrielForestiero',
                   color: 'purple'
                 },
-                { 
-                  icon: MapPin, 
-                  label: 'Ubicación', 
+                {
+                  icon: MapPin,
+                  label: 'Ubicación',
                   value: 'Buenos Aires, Argentina',
                   href: '#',
                   color: 'green'
@@ -235,16 +233,16 @@ const ContactSection = () => {
             </div>
           </div>
 
-          {/* Formulario con estilo cyberpunk - CENTRADO */}
+
           <div className="flex flex-col justify-center">
-            <h3 
+            <h3
               className="text-2xl font-mono font-bold text-white mb-8 text-center"
               style={{ textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}
             >
               <span className="text-purple-400">{'>'}</span> ENVIAR MENSAJE
             </h3>
-            
-            {/* Container centrado para el formulario */}
+
+
             <div className="space-y-6">
               <div
                 style={{

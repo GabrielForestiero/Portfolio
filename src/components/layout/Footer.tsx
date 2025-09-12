@@ -37,9 +37,9 @@ const Footer = ({
 
   return (
     <footer className="relative bg-gradient-to-b from-black via-gray-900 to-black text-white py-12 overflow-hidden">
-      {/* Background effects similar al Hero */}
+      
       <div className="absolute inset-0">
-        {/* Subtle matrix rain */}
+        
         <div className="absolute inset-0 overflow-hidden opacity-5">
           {Array.from({ length: 6 }, (_, i) => (
             <motion.div
@@ -63,7 +63,7 @@ const Footer = ({
           ))}
         </div>
 
-        {/* Subtle geometric patterns */}
+        
         <div className="absolute inset-0 opacity-5">
           <svg className="w-full h-full">
             {Array.from({ length: 4 }, (_, i) => (
@@ -93,7 +93,7 @@ const Footer = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          {/* Decorative line at top */}
+         
           <motion.div 
             className="w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent"
             initial={{ scaleX: 0 }}
@@ -101,7 +101,7 @@ const Footer = ({
             transition={{ duration: 1.5, delay: 0.3 }}
           />
 
-          {/* Social networks */}
+          
           <motion.div 
             className="flex space-x-8"
             initial={{ opacity: 0, y: 20 }}
@@ -129,7 +129,7 @@ const Footer = ({
                   <social.icon className="w-6 h-6" />
                 </motion.div>
                 
-                {/* Tooltip */}
+                
                 <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-mono">
                   {social.label}
                 </div>
@@ -137,10 +137,10 @@ const Footer = ({
             ))}
           </motion.div>
 
-          {/* Terminal-style divider */}
+        
         
 
-          {/* Copyright with cyberpunk style */}
+        
           <motion.div 
             className="text-center space-y-2"
             initial={{ opacity: 0, y: 20 }}
@@ -155,11 +155,11 @@ const Footer = ({
             
          
 
-            {/* Status indicator */}
+          
             
           </motion.div>
 
-          {/* Bottom decorative line */}
+          
           <motion.div 
             className="w-full max-w-2xl h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent"
             initial={{ scaleX: 0 }}
@@ -169,7 +169,7 @@ const Footer = ({
         </motion.div>
       </div>
 
-      {/* Corner decorations similar al Hero */}
+      
     
     </footer>
   );

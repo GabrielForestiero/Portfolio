@@ -15,7 +15,7 @@ const ExperienceSection = () => {
       type: 'Especialización Frontend',
       status: 'current',
       description: 'Me especialicé en desarrollo Front-End con React y TypeScript, entregando código escalable y mantenible. Diseñé e implementé sistemas de componentes modulares que estandarizaron patrones de UI en toda la organización. Optimicé el rendimiento mediante la gestión eficiente de estado y estrategias de renderizado de componentes.',
-      technologies: ['React', 'TypeScript','Styled Components'],
+      technologies: ['React', 'TypeScript', 'Styled Components'],
     },
     {
       id: 2,
@@ -36,7 +36,6 @@ const ExperienceSection = () => {
     }
   ];
 
-  // Animation variants
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -88,9 +87,9 @@ const ExperienceSection = () => {
 
   return (
     <section id="experience" className="relative min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-black via-gray-900 to-slate-900 overflow-hidden">
-      {/* Enhanced Background Effects */}
+
       <div className="absolute inset-0">
-        {/* Matrix rain con caracteres japoneses */}
+
         <div className="absolute inset-0 overflow-hidden opacity-5">
           {Array.from({ length: 12 }, (_, i) => (
             <motion.div
@@ -114,7 +113,7 @@ const ExperienceSection = () => {
           ))}
         </div>
 
-        {/* Enhanced Hexagonal grid */}
+
         <div className="absolute inset-0 opacity-8">
           <svg className="w-full h-full">
             {Array.from({ length: 15 }, (_, i) => (
@@ -151,7 +150,7 @@ const ExperienceSection = () => {
           </svg>
         </div>
 
-        {/* Ripple waves */}
+
         <div className="absolute inset-0 flex items-center justify-center opacity-10">
           {Array.from({ length: 3 }, (_, i) => (
             <motion.div
@@ -176,14 +175,14 @@ const ExperienceSection = () => {
         </div>
       </div>
 
-      {/* Corner decorations */}
+
       <motion.div
         className="absolute inset-0 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.5 }}
       >
-       
+
       </motion.div>
 
       <motion.div
@@ -192,12 +191,12 @@ const ExperienceSection = () => {
         initial="hidden"
         animate="visible"
       >
-        {/* Enhanced Header */}
+
         <motion.div className="mb-20 text-center" variants={itemVariants}>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-mono font-bold text-white mb-6">
             <span className="text-purple-400 mr-2">&gt;</span>
             <span className="text-cyan-400"> EXPERIENCIA</span>
-            
+
             <motion.span
               className="text-cyan-400 ml-2"
               animate={{ opacity: [1, 0, 1] }}
@@ -206,7 +205,7 @@ const ExperienceSection = () => {
               █
             </motion.span>
           </h2>
-           <div className="flex items-center justify-center gap-6 mb-6">
+          <div className="flex items-center justify-center gap-6 mb-6">
             <motion.div
               className="flex-1 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent max-w-32"
               initial={{ scaleX: 0 }}
@@ -226,9 +225,9 @@ const ExperienceSection = () => {
           </p>
         </motion.div>
 
-        {/* Timeline Responsive */}
+
         <div className="relative">
-          {/* Timeline line - centrada en mobile, lateral en desktop */}
+
           <div className="absolute left-1/2 sm:left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-purple-500 to-cyan-400 rounded-full opacity-30 transform -translate-x-1/2 sm:translate-x-0"></div>
 
           <div className="space-y-12 sm:space-y-16">
@@ -239,7 +238,7 @@ const ExperienceSection = () => {
                 variants={itemVariants}
                 custom={index}
               >
-                {/* Timeline dot - centrado en mobile, lateral en desktop */}
+
                 <motion.div
                   className="absolute left-1/2 sm:left-3 w-6 h-6 rounded-full border-4 border-gray-900 z-10 flex items-center justify-center transform -translate-x-1/2 sm:translate-x-0"
                   style={{
@@ -272,19 +271,19 @@ const ExperienceSection = () => {
                   )}
                 </motion.div>
 
-                {/* Content Card - centrado en mobile con margen, lateral en desktop */}
+
                 <div className="pt-8 sm:pt-0 sm:ml-16">
                   <motion.div
                     className="group relative"
                     variants={cardVariants}
                     whileHover="hover"
                   >
-                    {/* Glass card effect */}
+
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-xl border border-gray-700/50 rounded-2xl group-hover:border-cyan-400/50 transition-all duration-500" />
 
-                    {/* Card content */}
+
                     <div className="relative p-6 sm:p-8">
-                      {/* Header */}
+
                       <div className="mb-6">
                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-4">
                           <div className="flex-1 min-w-0">
@@ -307,7 +306,7 @@ const ExperienceSection = () => {
                             </div>
                           </div>
 
-                          {/* Status badge */}
+
                           {exp.status === 'current' && (
                             <motion.div
                               className="bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-400 px-3 py-1 sm:px-4 sm:py-2 rounded-xl text-xs font-mono font-bold border border-emerald-500/30 backdrop-blur-sm flex-shrink-0 self-center sm:self-start"
@@ -326,14 +325,14 @@ const ExperienceSection = () => {
                         </div>
                       </div>
 
-                      {/* Description */}
+
                       <div className="mb-6">
                         <p className="text-gray-300 leading-relaxed font-mono text-sm text-center sm:text-left">
                           {exp.description}
                         </p>
                       </div>
 
-                      {/* Technologies */}
+
                       <div className="mb-6">
                         <h4 className="text-white font-bold mb-3 font-mono text-sm sm:text-base text-center sm:text-left">
                           Stack Tecnológico:
