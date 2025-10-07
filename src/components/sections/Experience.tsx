@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { Calendar, MapPin, Award, Briefcase, Zap } from 'lucide-react';
+import { Calendar, MapPin, Award, Zap } from 'lucide-react';
 
 const ExperienceSection = () => {
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
@@ -86,112 +86,13 @@ const ExperienceSection = () => {
   };
 
   return (
-    <section id="experience" className="relative min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-black via-gray-900 to-slate-900 overflow-hidden">
-
-      <div className="absolute inset-0">
-
-        <div className="absolute inset-0 overflow-hidden opacity-5">
-          {Array.from({ length: 12 }, (_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-cyan-400/40 font-mono text-xs whitespace-pre"
-              style={{ left: `${i * 8}%` }}
-              animate={{
-                y: ['0vh', '200vh']
-              }}
-              transition={{
-                duration: 20 + Math.random() * 15,
-                repeat: Infinity,
-                ease: "linear",
-                delay: Math.random() * 20
-              }}
-            >
-              {Array.from({ length: 30 }, () =>
-                String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))
-              ).join('\n')}
-            </motion.div>
-          ))}
-        </div>
-
-
-        <div className="absolute inset-0 opacity-8">
-          <svg className="w-full h-full">
-            {Array.from({ length: 15 }, (_, i) => (
-              <motion.g
-                key={i}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 0.4, scale: 1 }}
-                transition={{ duration: 2, delay: i * 0.1 }}
-              >
-                <polygon
-                  points="50,25 75,37.5 75,62.5 50,75 25,62.5 25,37.5"
-                  stroke="#00ffff"
-                  strokeWidth="0.5"
-                  fill="none"
-                  transform={`translate(${(i * 200) % (typeof window !== 'undefined' ? window.innerWidth : 1200)}, ${Math.floor(i / 5) * 250 + 100})`}
-                />
-                <motion.circle
-                  cx={50 + (i * 200) % (typeof window !== 'undefined' ? window.innerWidth : 1200)}
-                  cy={50 + Math.floor(i / 5) * 250 + 100}
-                  r="1.5"
-                  fill="#00ffff"
-                  animate={{
-                    opacity: [0.3, 0.8, 0.3],
-                    scale: [1, 1.5, 1]
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    delay: i * 0.2
-                  }}
-                />
-              </motion.g>
-            ))}
-          </svg>
-        </div>
-
-
-        <div className="absolute inset-0 flex items-center justify-center opacity-10">
-          {Array.from({ length: 3 }, (_, i) => (
-            <motion.div
-              key={i}
-              className="absolute border border-purple-500/20 rounded-full"
-              style={{
-                width: `${400 + i * 300}px`,
-                height: `${400 + i * 300}px`
-              }}
-              animate={{
-                scale: [0.8, 1.2],
-                opacity: [0.5, 0]
-              }}
-              transition={{
-                duration: 12 + i * 3,
-                repeat: Infinity,
-                delay: i * 4,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-        </div>
-      </div>
-
-
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      >
-
-      </motion.div>
-
+    <section id="experience" className="relative min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-black via-gray-900 to-slate-900">
       <motion.div
         className="max-w-6xl mx-auto relative z-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-
         <motion.div className="mb-20 text-center" variants={itemVariants}>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-mono font-bold text-white mb-6">
             <span className="text-purple-400 mr-2">&gt;</span>
@@ -225,9 +126,7 @@ const ExperienceSection = () => {
           </p>
         </motion.div>
 
-
         <div className="relative">
-
           <div className="absolute left-1/2 sm:left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-purple-500 to-cyan-400 rounded-full opacity-30 transform -translate-x-1/2 sm:translate-x-0"></div>
 
           <div className="space-y-12 sm:space-y-16">
@@ -238,7 +137,6 @@ const ExperienceSection = () => {
                 variants={itemVariants}
                 custom={index}
               >
-
                 <motion.div
                   className="absolute left-1/2 sm:left-3 w-6 h-6 rounded-full border-4 border-gray-900 z-10 flex items-center justify-center transform -translate-x-1/2 sm:translate-x-0"
                   style={{
@@ -271,19 +169,15 @@ const ExperienceSection = () => {
                   )}
                 </motion.div>
 
-
                 <div className="pt-8 sm:pt-0 sm:ml-16">
                   <motion.div
                     className="group relative"
                     variants={cardVariants}
                     whileHover="hover"
                   >
-
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-xl border border-gray-700/50 rounded-2xl group-hover:border-cyan-400/50 transition-all duration-500" />
 
-
                     <div className="relative p-6 sm:p-8">
-
                       <div className="mb-6">
                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-4">
                           <div className="flex-1 min-w-0">
@@ -292,7 +186,6 @@ const ExperienceSection = () => {
                             </h3>
                             <div className="flex flex-col items-center sm:items-start sm:flex-row sm:flex-wrap gap-2 sm:gap-4 mb-3">
                               <div className="flex items-center gap-2">
-                                <Briefcase className="w-4 h-4 text-cyan-400 flex-shrink-0" />
                                 <span className="text-cyan-400 font-semibold font-mono text-sm sm:text-base">{exp.company}</span>
                               </div>
                               <div className="flex items-center gap-2">
@@ -305,7 +198,6 @@ const ExperienceSection = () => {
                               </div>
                             </div>
                           </div>
-
 
                           {exp.status === 'current' && (
                             <motion.div
@@ -325,13 +217,11 @@ const ExperienceSection = () => {
                         </div>
                       </div>
 
-
                       <div className="mb-6">
                         <p className="text-gray-300 leading-relaxed font-mono text-sm text-center sm:text-left">
                           {exp.description}
                         </p>
                       </div>
-
 
                       <div className="mb-6">
                         <h4 className="text-white font-bold mb-3 font-mono text-sm sm:text-base text-center sm:text-left">

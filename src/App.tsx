@@ -10,7 +10,7 @@ import SkillsSection from './components/sections/Skills';
 function App() {
 
   const headerMenuItems = [
-    { label: "Inicio", href: "#hero" },
+    { label: "Inicio", href: "#" },
     { label: "Sobre Mí", href: "#about" },
     { label: "Experiencia", href: "#experience" },
     { label: "Habilidades", href: "#skills" },

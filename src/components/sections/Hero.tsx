@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { Download, ChevronDown, Code, Palette, Zap, Cpu, CircuitBoard, Github, Linkedin, Mail } from 'lucide-react';
+import { Download, ChevronDown, Code, Palette, Zap, CircuitBoard, Github, Linkedin, Mail } from 'lucide-react';
 
 const HeroSection = () => {
   const [glitchText, setGlitchText] = useState('Gabriel Forestiero');
@@ -359,7 +359,7 @@ const HeroSection = () => {
             { icon: Code, text: 'Clean Code', color: 'cyan' },
             { icon: Palette, text: 'UI/UX Focus', color: 'purple' },
             { icon: Zap, text: 'Performance', color: 'yellow' },
-            { icon: Cpu, text: 'AI Ready', color: 'green' },
+            
             { icon: CircuitBoard, text: 'Scalable', color: 'blue' }
           ].map((skill, index) => (
             <motion.div
